@@ -1,8 +1,8 @@
 name: some_calendar
 description: SomeCalendar
 version: 0.0.1
-author:
-homepage:
+author: Irvan Lutfi Gunawan (Agryva)
+homepage: https://github.com/agryva/Some-Calendar
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
