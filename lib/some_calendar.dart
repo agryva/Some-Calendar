@@ -55,6 +55,7 @@ class SomeCalendarState extends State<SomeCalendar> {
   DateTime endRangeDate;
 
   DateTime now;
+  bool isSelectedModeFirstDateRange;
 
   SomeCalendarState(
       {@required this.done,
@@ -75,7 +76,7 @@ class SomeCalendarState extends State<SomeCalendar> {
     } else if (mode == SomeMode.Range) {
       firstRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
       endRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).add(days: 4);
-
+      isSelectedModeFirstDateRange = true;
       date = Jiffy(firstRangeDate).format("dd");
       dateEndDate = Jiffy(endRangeDate).format("dd");
       monthEndDate = Jiffy(endRangeDate).format("MMM");
@@ -145,16 +146,23 @@ class SomeCalendarState extends State<SomeCalendar> {
       });
 
     } else {
-      if (a.isBefore(firstRangeDate)) {
-        firstRangeDate = a;
+      if (isSelectedModeFirstDateRange) {
+        if (a.isBefore(endRangeDate)) {
+          firstRangeDate = a;
+        } else {
+          endRangeDate = a;
+        }
       } else {
-        endRangeDate = a;
+        if (a.isBefore(firstRangeDate)) {
+          firstRangeDate = a;
+        } else {
+          endRangeDate = a;
+        }
       }
+
       selectedDates.clear();
       generateListDateRange();
-      selectedDates.sort((a, b) {
-        return a.compareTo(b);
-      });
+      selectedDates.sort((a, b) => a.compareTo(b));
       setState(() {
         date = Jiffy(firstRangeDate).format("dd");
         dateEndDate = Jiffy(endRangeDate).format("dd");
@@ -222,52 +230,65 @@ class SomeCalendarState extends State<SomeCalendar> {
               children: <Widget>[
                 if (mode == SomeMode.Range) ...[
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "First Date",
-                          style: TextStyle(
-                              fontFamily: "playfair-regular", fontSize: 12,
-                          color: Colors.black),
-                        ),
-                        SizedBox(
-                          height: 2
-                          ,
-                        ),
-                        Text(
-                          "$date $month, $year",
-                          style: TextStyle(
-                              fontFamily: "playfair-regular",
-                              color: Color(0xff365535).withAlpha(150),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          isSelectedModeFirstDateRange = true;
+                        });
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "First Date",
+                            style: TextStyle(
+                                fontFamily: "playfair-regular", fontSize: 12,
+                            color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            "$date $month, $year",
+                            style: TextStyle(
+                                fontFamily: "playfair-regular",
+                                color: isSelectedModeFirstDateRange ? Color (0xff365535) : Color(0xff365535).withAlpha(150),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "last Date",
-                          style: TextStyle(
-                              fontFamily: "playfair-regular", fontSize: 12,
-                          color: Colors.black),
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          "$dateEndDate $monthEndDate, $yearEndDate",
-                          style: TextStyle(
-                              fontFamily: "playfair-regular",
-                              color: Color(0xff365535),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          isSelectedModeFirstDateRange = false;
+                        });
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "last Date",
+                            style: TextStyle(
+                                fontFamily: "playfair-regular", fontSize: 12,
+                            color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            "$dateEndDate $monthEndDate, $yearEndDate",
+                            style: TextStyle(
+                                fontFamily: "playfair-regular",
+                                color: isSelectedModeFirstDateRange ? Color(0xff365535).withAlpha(150) : Color (0xff365535) ,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ] else if(mode == SomeMode.Single) ...[
