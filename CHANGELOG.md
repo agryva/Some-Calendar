@@ -1,7 +1,7 @@
 ## [1.0.1] -  Add release date.
 
-* Add Selected Function
-* Fix Selected Function
+* Add Selected date Function
+* Fix Selected date Function
 
 ## [1.0.0] -  Add release date.
 
