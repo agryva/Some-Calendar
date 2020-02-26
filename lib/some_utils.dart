@@ -19,4 +19,9 @@ class SomeUtils {
     var yearsDifference = lastDate.year - firstDate.year;
     return 12 * yearsDifference + lastDate.month - firstDate.month;
   }
+
+  static int getDiffMonth(DateTime startDate, DateTime date) {
+    return (date.year * 12 + date.month) -
+        (startDate.year * 12 + startDate.month);
+  }
 }

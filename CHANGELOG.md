@@ -1,3 +1,8 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.1] -  Add release date.
 
-* TODO: Describe initial release.
+* Add Selected Function
+* Fix Selected Function
+
+## [1.0.0] -  Add release date.
+
+* Release first version

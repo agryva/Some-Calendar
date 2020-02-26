@@ -156,6 +156,8 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
       return selectedDates.contains(currentDate) ? Colors.white : Colors.black;
     } else if (mode == SomeMode.Single) {
       return selectedDate == currentDate ? Colors.white : Colors.black;
+    } else {
+      return null;
     }
   }
 

@@ -86,13 +86,12 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Single',
               labelStyle: TextStyle(fontSize: 18.0),
               onTap: () {
-                var now = Jiffy();
                 showDialog(
                     context: context,
                     builder: (_) => SomeCalendar(
                           mode: SomeMode.Single,
-                          startDate: now.dateTime,
-                          lastDate: now.add(months: 9),
+                          startDate: Jiffy().subtract(years: 3),
+                          lastDate: Jiffy().add(months: 9),
                           done: (date) {
                             setState(() {
                               dates = date;
@@ -107,13 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Multi',
             labelStyle: TextStyle(fontSize: 18.0),
             onTap: () {
-              var now = Jiffy();
               showDialog(
                   context: context,
                   builder: (_) => SomeCalendar(
                         mode: SomeMode.Multi,
-                        startDate: now.dateTime,
-                        lastDate: now.add(months: 9),
+                        startDate: Jiffy().subtract(years: 3),
+                        lastDate: Jiffy().add(months: 9),
                         done: (date) {
                           setState(() {
                             dates = date;
@@ -129,13 +127,13 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Range',
             labelStyle: TextStyle(fontSize: 18.0),
             onTap: () {
-              var now = Jiffy();
               showDialog(
                   context: context,
                   builder: (_) => SomeCalendar(
                     mode: SomeMode.Range,
-                    startDate: now.dateTime,
-                    lastDate: now.add(months: 9),
+                    selectedDate: DateTime(2016, 02, 02),
+                    startDate: Jiffy().subtract(years: 3),
+                    lastDate: Jiffy().add(months: 9),
                     done: (date) {
                       setState(() {
                         dates = date;
