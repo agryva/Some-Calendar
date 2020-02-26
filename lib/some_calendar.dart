@@ -15,8 +15,8 @@ class SomeCalendar extends StatefulWidget {
   final SomeMode mode;
   final OnDoneFunction done;
 
-  DateTime startDate;
-  DateTime lastDate;
+  final DateTime startDate;
+  final DateTime lastDate;
 
   SomeCalendar({@required this.mode, this.startDate, this.lastDate, this.done}) {
     assert(mode != null);
