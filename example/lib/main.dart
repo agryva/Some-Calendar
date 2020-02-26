@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:some_calendar/some_calendar.dart';
 
@@ -32,14 +33,19 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var dates;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -49,30 +55,102 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               'SomeCalendar',
-              style: TextStyle(
-                fontSize: 18
-              ),
+              style: TextStyle(fontSize: 18),
             ),
-
+            SizedBox(
+              height: 8,
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          var a = Jiffy();
-          showDialog(context: context,builder: (_) =>SomeCalendar(
-            mode: SomeMode.Range,
-            startDate: a.dateTime,
-            lastDate: a.add(months: 4),
-            done: (date) {
-                print("iniDate $date");
+      floatingActionButton: SpeedDial(
+        // both default to 16
+        marginRight: 18,
+        marginBottom: 20,
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+        closeManually: false,
+        curve: Curves.bounceIn,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        tooltip: 'Some calendar',
+        heroTag: 'Some-calendar',
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 8.0,
+        shape: CircleBorder(),
+        children: [
+          SpeedDialChild(
+              child: Icon(Icons.calendar_today),
+              backgroundColor: Colors.red,
+              label: 'Single',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () {
+                var now = Jiffy();
+                showDialog(
+                    context: context,
+                    builder: (_) => SomeCalendar(
+                          mode: SomeMode.Single,
+                          startDate: now.dateTime,
+                          lastDate: now.add(months: 9),
+                          done: (date) {
+                            setState(() {
+                              dates = date;
+                              showSnackbar(dates.toString());
+                            });
+                          },
+                        ));
+              }),
+          SpeedDialChild(
+            child: Icon(Icons.calendar_today),
+            backgroundColor: Colors.blue,
+            label: 'Multi',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () {
+              var now = Jiffy();
+              showDialog(
+                  context: context,
+                  builder: (_) => SomeCalendar(
+                        mode: SomeMode.Multi,
+                        startDate: now.dateTime,
+                        lastDate: now.add(months: 9),
+                        done: (date) {
+                          setState(() {
+                            dates = date;
+                            showSnackbar(dates.toString());
+                          });
+                        },
+                      ));
             },
-          ) );
-
-        },
-        tooltip: 'Calendar',
-        child: Icon(Icons.calendar_today),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.calendar_today),
+            backgroundColor: Colors.green,
+            label: 'Range',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () {
+              var now = Jiffy();
+              showDialog(
+                  context: context,
+                  builder: (_) => SomeCalendar(
+                    mode: SomeMode.Range,
+                    startDate: now.dateTime,
+                    lastDate: now.add(months: 9),
+                    done: (date) {
+                      setState(() {
+                        dates = date;
+                        showSnackbar(dates.toString());
+                      });
+                    },
+                  ));
+            },
+          ),
+        ],
+      ),
     );
+  }
+
+  void showSnackbar(String x) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(x),));
   }
 }

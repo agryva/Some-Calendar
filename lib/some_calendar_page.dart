@@ -33,7 +33,8 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
   final OnTapFunction onTapFunction;
   final SomeCalendarState state;
   final SomeMode mode;
-  var startDayOffset = 0;
+
+  int startDayOffset = 0;
   List<DateTime> selectedDates;
   DateTime selectedDate;
 
@@ -114,7 +115,6 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
   }
 
   Widget someDay(currentDate) {
-
     return Expanded(
       child: Container(
         decoration: getDecoration(currentDate),
@@ -133,8 +133,7 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
               child: Center(
                   child: Text(
                 "${currentDate.day}",
-                style: TextStyle(
-                    color: getColor(currentDate)),
+                style: TextStyle(color: getColor(currentDate)),
               )),
             )),
           ),
@@ -167,21 +166,21 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
     );
     if (mode == SomeMode.Multi) {
       return selectedDates.contains(currentDate) ? decoration : null;
-    } else if (mode == SomeMode.Single){
+    } else if (mode == SomeMode.Single) {
       return selectedDate == currentDate ? decoration : null;
     } else {
-
       if (selectedDates[0] == currentDate) {
         return BoxDecoration(
-          color: Color(0xff365535),
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50), topLeft: Radius.circular(50))
-        );
+            color: Color(0xff365535),
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(50), topLeft: Radius.circular(50)));
       } else if (selectedDates[selectedDates.length - 1] == currentDate) {
         return BoxDecoration(
             color: Color(0xff365535),
-            borderRadius: BorderRadius.only(bottomRight: Radius.circular(50), topRight: Radius.circular(50))
-        );
-      } else  {
+            borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(50),
+                topRight: Radius.circular(50)));
+      } else {
         if (selectedDates.contains(currentDate)) {
           return BoxDecoration(
             color: Color(0xff365535).withAlpha(180),
@@ -192,6 +191,5 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
         }
       }
     }
-
   }
 }
