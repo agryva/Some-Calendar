@@ -18,7 +18,9 @@ class SomeCalendar extends StatefulWidget {
   DateTime startDate;
   DateTime lastDate;
 
-  SomeCalendar({@required this.mode, this.startDate, this.lastDate, this.done});
+  SomeCalendar({@required this.mode, this.startDate, this.lastDate, this.done}) {
+    assert(mode != null);
+  }
 
   @override
   SomeCalendarState createState() => SomeCalendarState(
@@ -67,9 +69,10 @@ class SomeCalendarState extends State<SomeCalendar> {
     if (startDate == null) startDate = SomeUtils.getStartDateDefault();
     if (lastDate == null) lastDate = SomeUtils.getLastDateDefault();
     if (selectedDates == null) selectedDates = List();
-    if (mode == SomeMode.Single)
+    if (mode == SomeMode.Single) {
       selectedDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-    else if (mode == SomeMode.Range) {
+      date = Jiffy(selectedDate).format("dd");
+    } else if (mode == SomeMode.Range) {
       firstRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
       endRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).add(days: 4);
 
@@ -97,7 +100,8 @@ class SomeCalendarState extends State<SomeCalendar> {
         setState(() {
           month = Jiffy(someDateRange.startDate).format("MMM");
           year = Jiffy(someDateRange.startDate).format("yyyy");
-          date = Jiffy(firstRangeDate).format("dd");
+          if (mode == SomeMode.Range) date = Jiffy(firstRangeDate).format("dd");
+          else date = Jiffy(selectedDate).format("dd");
 
           dateEndDate = Jiffy(endRangeDate).format("dd");
           monthEndDate = Jiffy(endRangeDate).format("MMM");
@@ -136,6 +140,10 @@ class SomeCalendarState extends State<SomeCalendar> {
       });
     } else if (mode == SomeMode.Single) {
       selectedDate = a;
+      setState(() {
+        date = Jiffy(selectedDate).format("dd");
+      });
+
     } else {
       if (a.isBefore(firstRangeDate)) {
         firstRangeDate = a;
@@ -262,15 +270,48 @@ class SomeCalendarState extends State<SomeCalendar> {
                       ],
                     ),
                   ),
+                ] else if(mode == SomeMode.Single) ...[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Selected Date",
+                          style: TextStyle(
+                              fontFamily: "playfair-regular", fontSize: 12,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          "$date $month, $year",
+                          style: TextStyle(
+                              fontFamily: "playfair-regular",
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ),
                 ] else ...[
                   Expanded(
-                    child: Text(
-                      "$month, $year",
-                      style: TextStyle(
-                          fontFamily: "playfair-regular",
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Selected Date",
+                          style: TextStyle(
+                              fontFamily: "playfair-regular", fontSize: 12,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          "$month, $year",
+                          style: TextStyle(
+                              fontFamily: "playfair-regular",
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                      ],
                     ),
                   ),
                 ]

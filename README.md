@@ -1,4 +1,4 @@
-# some_calendar
+# some calendar
 
 SomeCalendar
 

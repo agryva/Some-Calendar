@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           var a = Jiffy();
           showDialog(context: context,builder: (_) =>SomeCalendar(
-            mode: SomeMode.Range,
+            mode: SomeMode.Multi,
             startDate: a.dateTime,
             lastDate: a.add(months: 4),
             done: (date) {
