@@ -26,7 +26,7 @@ import 'package:some_calendar/some_calendar.dart';
 
 ## <a name="#screenshot"></a>Screenshoot ##
 
-| <img src="screen/multi.jpg" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="screen/range.jpg" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="screen/single.jpg" width="379px;"/><br /><sub><b>Single</b></sub> |
+| <img src="https://github.com/agryva/Some-Calendar/blob/master/screen/multi.jpg" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://github.com/agryva/Some-Calendar/blob/master/screen/range.jpg" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://github.com/agryva/Some-Calendar/blob/master/screen/single.jpg" width="379px;"/><br /><sub><b>Single</b></sub> |
 | :---: | :---: | :---: |
 
 ## License MIT License
