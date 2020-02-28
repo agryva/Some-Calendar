@@ -24,6 +24,60 @@ First, add an import to your code:
 import 'package:some_calendar/some_calendar.dart';
 ```
 
+Single Mode, add to your code:
+```dart
+    showDialog(
+        context: context,
+        builder: (_) => SomeCalendar(
+          mode: SomeMode.Single,
+          selectedDate: selectedDate,
+          startDate: Jiffy().subtract(years: 3),
+          lastDate: Jiffy().add(months: 9),
+          done: (date) {
+            setState(() {
+              selectedDate = date;
+              showSnackbar(selectedDate.toString());
+            });
+          },
+        ));
+```
+
+Multi Mode, add to your code:
+```dart
+    showDialog(
+        context: context,
+        builder: (_) => SomeCalendar(
+          mode: SomeMode.Multi,
+          startDate: Jiffy().subtract(years: 3),
+          lastDate: Jiffy().add(months: 9),
+          selectedDates: selectedDates,
+          done: (date) {
+            setState(() {
+              selectedDates = date;
+              showSnackbar(selectedDates.toString());
+            });
+          },
+        ));
+```
+
+Range Mode, add to your code:
+```dart
+    showDialog(
+        context: context,
+        builder: (_) => SomeCalendar(
+          mode: SomeMode.Range,
+          startDate: Jiffy().subtract(years: 3),
+          lastDate: Jiffy().add(months: 9),
+          selectedDates: selectedDates,
+          done: (date) {
+            setState(() {
+              selectedDates = date;
+              showSnackbar(selectedDates.toString());
+            });
+          },
+        ));
+```
+
 ## <a name="#screenshot"></a>Screenshoot ##
 
 | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi.jpg" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range.jpg" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single.jpg" width="379px;"/><br /><sub><b>Single</b></sub> |
