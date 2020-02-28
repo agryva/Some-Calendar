@@ -1,7 +1,33 @@
 # some calendar
+[![pub package](https://img.shields.io/pub/v/some_calendar.svg)](https://pub.dev/packages/some_calendar#-readme-tab-)
 
 Custom calendar (multi select, single select, date range) for Flutter
 
+## Table of contents
+
+* [Getting Started](#getting-started)
+* [Screenshoot](#screenshot)
+
+## <a name="#getting-started"></a>Requirements to run the demo ##
+
+### Setup
+Add dependency to your pubspec.yaml:
+
+```dart
+some_calendar: ^{latest_version}
+```
+
+
+### Basic use
+First, add an import to your code:
+```dart
+import 'package:some_calendar/some_calendar.dart';
+```
+
+## <a name="#screenshot"></a>Screenshoot ##
+
+| <img src="screen/multi.png" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="screen/range.png" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="screen/single.png" width="379px;"/><br /><sub><b>Single</b></sub> |
+| :---: | :---: | :---: |
 
 ## License MIT License
 

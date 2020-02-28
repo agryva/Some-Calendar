@@ -39,7 +39,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var dates;
+  DateTime selectedDate = DateTime.now();
+  List<DateTime> selectedDates = List();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -90,12 +91,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     builder: (_) => SomeCalendar(
                           mode: SomeMode.Single,
+                          selectedDate: selectedDate,
                           startDate: Jiffy().subtract(years: 3),
                           lastDate: Jiffy().add(months: 9),
                           done: (date) {
                             setState(() {
-                              dates = date;
-                              showSnackbar(dates.toString());
+                              selectedDate = date;
+                              showSnackbar(selectedDate.toString());
                             });
                           },
                         ));
@@ -112,10 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         mode: SomeMode.Multi,
                         startDate: Jiffy().subtract(years: 3),
                         lastDate: Jiffy().add(months: 9),
+                        selectedDates: selectedDates,
                         done: (date) {
                           setState(() {
-                            dates = date;
-                            showSnackbar(dates.toString());
+                            selectedDates = date;
+                            showSnackbar(selectedDates.toString());
                           });
                         },
                       ));
@@ -127,20 +130,23 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Range',
             labelStyle: TextStyle(fontSize: 18.0),
             onTap: () {
+              print("test $selectedDates");
               showDialog(
                   context: context,
                   builder: (_) => SomeCalendar(
                     mode: SomeMode.Range,
-                    selectedDate: DateTime(2016, 02, 02),
                     startDate: Jiffy().subtract(years: 3),
                     lastDate: Jiffy().add(months: 9),
+                    selectedDates: selectedDates,
                     done: (date) {
                       setState(() {
-                        dates = date;
-                        showSnackbar(dates.toString());
+                        selectedDates = date;
+                        showSnackbar(selectedDates.toString());
                       });
                     },
-                  ));
+                  )).then((s) {
+                print("test1 $selectedDates");
+              });
             },
           ),
         ],

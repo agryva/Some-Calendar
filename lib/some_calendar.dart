@@ -15,18 +15,26 @@ class SomeCalendar extends StatefulWidget {
   final SomeMode mode;
   final OnDoneFunction done;
 
-  final DateTime startDate;
-  final DateTime lastDate;
-  final DateTime selectedDate;
+  DateTime startDate;
+  DateTime lastDate;
+  DateTime selectedDate;
+  List<DateTime> selectedDates;
 
-  SomeCalendar({
-    @required this.mode,
-    this.startDate,
-    this.lastDate,
-    this.done,
-    this.selectedDate,
-  }) {
+  SomeCalendar(
+      {@required this.mode,
+      this.startDate,
+      this.lastDate,
+      this.done,
+      this.selectedDate,
+      this.selectedDates}) {
+    DateTime now = Jiffy().dateTime;
     assert(mode != null);
+    if (startDate == null) startDate = SomeUtils.getStartDateDefault();
+    if (lastDate == null) lastDate = SomeUtils.getLastDateDefault();
+    if (selectedDates == null) selectedDates = List();
+    if (selectedDate == null) {
+      selectedDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
+    }
   }
 
   @override
@@ -35,6 +43,7 @@ class SomeCalendar extends StatefulWidget {
       startDate: startDate,
       mode: mode,
       done: done,
+      selectedDates: selectedDates,
       selectedDate: selectedDate);
 
   static SomeCalendarState of(BuildContext context) =>
@@ -75,34 +84,29 @@ class SomeCalendarState extends State<SomeCalendar> {
       {@required this.done,
       this.startDate,
       this.lastDate,
-      this.selectedDates,
       this.selectedDate,
-      this.mode});
-
-  @override
-  void initState() {
+      this.selectedDates,
+      this.mode}) {
     now = Jiffy().dateTime;
-    if (startDate == null) startDate = SomeUtils.getStartDateDefault();
-    if (lastDate == null) lastDate = SomeUtils.getLastDateDefault();
-    if (selectedDates == null) selectedDates = List();
-    if (selectedDate == null) {
-      selectedDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-    }
+
     if (mode == SomeMode.Range) {
-      if (selectedDate == null) {
+      if (selectedDates == null) {
         firstRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
         endRangeDate =
             Jiffy(DateTime(now.year, now.month, now.day)).add(days: 4);
       } else {
-        if (selectedDate.difference(startDate).inDays >= 0) {
-          firstRangeDate = Jiffy(DateTime(
-              selectedDate.year, selectedDate.month, selectedDate.day))
-              .dateTime;
-          endRangeDate = Jiffy(DateTime(
-              selectedDate.year, selectedDate.month, selectedDate.day))
-              .add(days: 4);
+        DateTime dateRange = now;
+        if (selectedDates.length > 0) {
+          dateRange = selectedDates[0];
+        }
+
+        if (dateRange.difference(startDate).inDays >= 0) {
+          firstRangeDate = Jiffy(selectedDates[0]).dateTime;
+          endRangeDate =
+              Jiffy(selectedDates[selectedDates.length - 1]).dateTime;
         } else {
-          firstRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
+          firstRangeDate =
+              Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
           endRangeDate =
               Jiffy(DateTime(now.year, now.month, now.day)).add(days: 4);
         }
@@ -112,26 +116,39 @@ class SomeCalendarState extends State<SomeCalendar> {
       monthFirstDate = Jiffy(firstRangeDate).format("MMM");
       yearFirstDate = Jiffy(firstRangeDate).format("yyyy");
 
-      month = monthFirstDate;
-      year = yearFirstDate;
-
       dateEndDate = Jiffy(endRangeDate).format("dd");
       monthEndDate = Jiffy(endRangeDate).format("MMM");
       yearEndDate = Jiffy(endRangeDate).format("yyyy");
-      generateListDateRange();
-    }
-    else  {
+      if (selectedDates.length <= 0)
+        generateListDateRange();
+      else {
+        var diff = selectedDates[selectedDates.length - 1]
+                .difference(selectedDates[0])
+                .inDays +
+            1;
+        var date = selectedDates[0];
+        selectedDates.clear();
+        for (int i = 0; i < diff; i++) {
+          selectedDates.add(date);
+          date = Jiffy(date).add(days: 1);
+        }
+      }
+    } else {
       dateFirstDate = Jiffy(selectedDate).format("dd");
       monthFirstDate = Jiffy(selectedDate).format("MMM");
       yearFirstDate = Jiffy(selectedDate).format("yyyy");
     }
+  }
 
+  @override
+  void initState() {
+    month = monthFirstDate;
+    year = yearFirstDate;
     startDate = SomeUtils.setToMidnight(startDate);
     lastDate = SomeUtils.setToMidnight(lastDate);
     pagesCount = SomeUtils.getCountFromDiffDate(startDate, lastDate);
-    controller = PageController(
-        keepPage: false,
-        initialPage: getInitialController());
+    controller =
+        PageController(keepPage: false, initialPage: getInitialController());
 
     pageView = PageView.builder(
       controller: controller,
@@ -143,7 +160,9 @@ class SomeCalendarState extends State<SomeCalendar> {
           if (mode == SomeMode.Multi) {
             monthFirstDate = Jiffy(someDateRange.startDate).format("MMM");
             yearFirstDate = Jiffy(someDateRange.startDate).format("yyyy");
-          } else if (mode == SomeMode.Range) {
+            month = Jiffy(someDateRange.startDate).format("MMM");
+            year = Jiffy(someDateRange.startDate).format("yyyy");
+          } else if (mode == SomeMode.Range || mode == SomeMode.Single) {
             month = Jiffy(someDateRange.startDate).format("MMM");
             year = Jiffy(someDateRange.startDate).format("yyyy");
           }
@@ -418,7 +437,7 @@ class SomeCalendarState extends State<SomeCalendar> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: <Widget>[
-            if (mode == SomeMode.Range) ...[
+            if (mode != SomeMode.Multi) ...[
               Text(
                 "$month, $year",
                 style: TextStyle(
@@ -428,8 +447,10 @@ class SomeCalendarState extends State<SomeCalendar> {
                     letterSpacing: 1,
                     color: Color(0xff365535)),
               ),
-              SizedBox(height: 10,)
             ],
+            SizedBox(
+              height: 10,
+            ),
             Expanded(
               child: ListView(
                 shrinkWrap: true,
@@ -441,7 +462,6 @@ class SomeCalendarState extends State<SomeCalendar> {
             ),
             Row(
               children: <Widget>[
-
                 Expanded(
                   child: RaisedButton(
                     elevation: 0,
