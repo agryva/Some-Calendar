@@ -79,6 +79,7 @@ class SomeCalendarState extends State<SomeCalendar> {
 
   DateTime now;
   bool isSelectedModeFirstDateRange;
+  Color primaryColor;
 
   SomeCalendarState(
       {@required this.done,
@@ -86,9 +87,12 @@ class SomeCalendarState extends State<SomeCalendar> {
       this.lastDate,
       this.selectedDate,
       this.selectedDates,
-      this.mode}) {
+      this.mode,
+      this.primaryColor}) {
     now = Jiffy().dateTime;
-
+    if (primaryColor == null) {
+      primaryColor = Color(0xff365535);
+    }
     if (mode == SomeMode.Range) {
       if (selectedDates == null) {
         firstRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
@@ -99,11 +103,17 @@ class SomeCalendarState extends State<SomeCalendar> {
         if (selectedDates.length > 0) {
           dateRange = selectedDates[0];
         }
-
         if (dateRange.difference(startDate).inDays >= 0) {
-          firstRangeDate = Jiffy(selectedDates[0]).dateTime;
-          endRangeDate =
-              Jiffy(selectedDates[selectedDates.length - 1]).dateTime;
+          if (selectedDates.length > 0) {
+            firstRangeDate = Jiffy(selectedDates[0]).dateTime;
+            endRangeDate =
+                Jiffy(selectedDates[selectedDates.length - 1]).dateTime;
+          } else {
+            firstRangeDate =
+                Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
+            endRangeDate =
+                Jiffy(DateTime(now.year, now.month, now.day)).add(days: 4);
+          }
         } else {
           firstRangeDate =
               Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
@@ -177,6 +187,7 @@ class SomeCalendarState extends State<SomeCalendar> {
           onTapFunction: onCallback,
           state: SomeCalendar.of(context),
           mode: mode,
+          primaryColor: primaryColor,
         ));
       },
     );
@@ -287,7 +298,7 @@ class SomeCalendarState extends State<SomeCalendar> {
   }
 
   show() {
-    var heightContainer = mode == SomeMode.Range ? 50 * 6 : 48 * 6;
+    var heightContainer = mode == SomeMode.Range ? 55 * 6 : 55 * 6;
     return AlertDialog(
       titlePadding: EdgeInsets.fromLTRB(0, 16, 0, 5),
       shape: RoundedRectangleBorder(
@@ -326,8 +337,8 @@ class SomeCalendarState extends State<SomeCalendar> {
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 color: isSelectedModeFirstDateRange
-                                    ? Color(0xff365535)
-                                    : Color(0xff365535).withAlpha(150),
+                                    ? primaryColor
+                                    : primaryColor.withAlpha(150),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
@@ -360,8 +371,8 @@ class SomeCalendarState extends State<SomeCalendar> {
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 color: isSelectedModeFirstDateRange
-                                    ? Color(0xff365535).withAlpha(150)
-                                    : Color(0xff365535),
+                                    ? primaryColor.withAlpha(150)
+                                    : primaryColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
@@ -445,11 +456,11 @@ class SomeCalendarState extends State<SomeCalendar> {
                     fontSize: 14.2,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1,
-                    color: Color(0xff365535)),
+                    color: primaryColor),
               ),
             ],
             SizedBox(
-              height: 10,
+              height: 16,
             ),
             Expanded(
               child: ListView(
@@ -465,7 +476,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                 Expanded(
                   child: RaisedButton(
                     elevation: 0,
-                    color: Color(0xff365535),
+                    color: primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(18)),
                     ),
@@ -505,7 +516,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                       style: TextStyle(
                           fontFamily: "Avenir",
                           fontSize: 14,
-                          color: Color(0xff365535)),
+                          color: primaryColor),
                     ),
                   ),
                 ),

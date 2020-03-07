@@ -9,6 +9,7 @@ class SomeCalendarPage extends StatefulWidget {
   final OnTapFunction onTapFunction;
   final SomeCalendarState state;
   final SomeMode mode;
+  final Color primaryColor;
 
   SomeCalendarPage(
       {Key key,
@@ -16,7 +17,8 @@ class SomeCalendarPage extends StatefulWidget {
       @required this.lastDate,
       this.onTapFunction,
       this.state,
-      this.mode});
+      this.mode,
+      this.primaryColor});
 
   @override
   _SomeCalendarPageState createState() => _SomeCalendarPageState(
@@ -24,7 +26,8 @@ class SomeCalendarPage extends StatefulWidget {
       lastDate: lastDate,
       onTapFunction: onTapFunction,
       state: state,
-      mode: mode);
+      mode: mode,
+      primaryColor: primaryColor);
 }
 
 class _SomeCalendarPageState extends State<SomeCalendarPage> {
@@ -33,6 +36,7 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
   final OnTapFunction onTapFunction;
   final SomeCalendarState state;
   final SomeMode mode;
+  final Color primaryColor;
 
   int startDayOffset = 0;
   List<DateTime> selectedDates;
@@ -43,7 +47,8 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
       this.lastDate,
       this.onTapFunction,
       this.state,
-      this.mode});
+      this.mode,
+      this.primaryColor});
 
   @override
   void initState() {
@@ -163,7 +168,7 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
 
   Decoration getDecoration(currentDate) {
     var decoration = BoxDecoration(
-      color: Color(0xff365535),
+      color: primaryColor,
       shape: BoxShape.circle,
     );
     if (mode == SomeMode.Multi) {
@@ -173,19 +178,19 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
     } else {
       if (selectedDates[0] == currentDate) {
         return BoxDecoration(
-            color: Color(0xff365535),
+            color: primaryColor,
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(50), topLeft: Radius.circular(50)));
       } else if (selectedDates[selectedDates.length - 1] == currentDate) {
         return BoxDecoration(
-            color: Color(0xff365535),
+            color: primaryColor,
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(50),
                 topRight: Radius.circular(50)));
       } else {
         if (selectedDates.contains(currentDate)) {
           return BoxDecoration(
-            color: Color(0xff365535).withAlpha(180),
+            color: primaryColor.withAlpha(180),
             shape: BoxShape.rectangle,
           );
         } else {

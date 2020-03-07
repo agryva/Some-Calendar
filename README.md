@@ -1,7 +1,12 @@
 # some calendar
 [![pub package](https://img.shields.io/pub/v/some_calendar.svg)](https://pub.dev/packages/some_calendar#-readme-tab-)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 Custom calendar (multi select, single select, date range) for Flutter
+
+
+## New Features
++ You can use favorite color :tada:.
 
 ## Table of contents
 
@@ -69,6 +74,7 @@ Range Mode, add to your code:
           startDate: Jiffy().subtract(years: 3),
           lastDate: Jiffy().add(months: 9),
           selectedDates: selectedDates,
+          primaryColor: Colors.red,
           done: (date) {
             setState(() {
               selectedDates = date;
@@ -78,29 +84,29 @@ Range Mode, add to your code:
         ));
 ```
 
+## SomeMode
+| SomeMode |
+| :---------------------- |
+| Range
+| Single
+| Multi
+
+## Parameters
+| parameter                   | types           | defaultValues                                                                                                     |
+| :---------------------- | :-------------: | :---------------------------------------------------------------------------------------------------------------: |
+| primaryColor        | `color`        | Color(0xff365535) |
+| startDate| `Date`     | |
+| lastDate| `Date`     | |
+| selectedDate       | `Date`     | Date.now() |
+| selectedDates| `Date`     | Date.now() + 4 days|
+| mode| `SomeMode`     |  |
+
 ## <a name="#screenshot"></a>Screenshoot ##
 
 | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi.jpg" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range.jpg" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single.jpg" width="379px;"/><br /><sub><b>Single</b></sub> |
 | :---: | :---: | :---: |
 
-## License MIT License
-
-Copyright (c) 2020 Irvan Lutfi Gunawan
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+## Help Maintenance
+I've taken the time to make this library, help support to develop it or buy me coffee and snacks to be even more enthusiastic
+<br/>
+[![Paypal](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png)](https://paypal.me/agryva)
