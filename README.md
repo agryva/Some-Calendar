@@ -10,8 +10,21 @@ Custom calendar (multi select, single select, date range) for Flutter
 
 ## Table of contents
 
-* [Getting Started](#getting-started)
 * [Screenshoot](#screenshot)
+* [Getting Started](#getting-started)
+
+
+## <a name="#screenshot"></a>Screenshoot ##
+
+| <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi.jpg" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range.jpg" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single.jpg" width="379px;"/><br /><sub><b>Single</b></sub> |
+| :---: | :---: | :---: |
+
+
+## <a name="#gif"></a>Gif ##
+
+| <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi.gif" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range.gif" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single.gif" width="379px;"/><br /><sub><b>Single</b></sub> |
+| :---: | :---: | :---: |
+
 
 ## <a name="#getting-started"></a>Requirements to run the demo ##
 
@@ -100,17 +113,6 @@ Range Mode, add to your code:
 | selectedDate       | `Date`     | Date.now() |
 | selectedDates| `Date[]`     | Date.now() + 4 days|
 | mode| `SomeMode`     |  |
-
-## <a name="#screenshot"></a>Screenshoot ##
-
-| <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi.jpg" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range.jpg" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single.jpg" width="379px;"/><br /><sub><b>Single</b></sub> |
-| :---: | :---: | :---: |
-
-
-## <a name="#gif"></a>Gif ##
-
-| <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi.gif" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range.gif" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single.gif" width="379px;"/><br /><sub><b>Single</b></sub> |
-| :---: | :---: | :---: |
 
 
 ## Help Maintenance
