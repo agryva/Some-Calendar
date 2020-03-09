@@ -63,7 +63,9 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
       selectedDate = state.selectedDate;
     }
     List<Widget> rows = [];
-    rows.add(SomeWeekLabelEN());
+    rows.add(SomeWeekLabelEN(
+      primaryColor: primaryColor,
+    ));
 
     var dateTime = Jiffy(startDate);
     for (int i = 1; i < 7; i++) {
@@ -158,12 +160,23 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
 
   Color getColor(currentDate) {
     if (mode == SomeMode.Multi || mode == SomeMode.Range) {
-      return selectedDates.contains(currentDate) ? Colors.white : Colors.black;
+      return selectedDates.contains(currentDate)
+          ? Colors.white
+          : (isWeekend(currentDate)
+              ? Colors.black45
+              : Colors.black);
     } else if (mode == SomeMode.Single) {
-      return selectedDate == currentDate ? Colors.white : Colors.black;
+      return selectedDate == currentDate ? Colors.white : (isWeekend(currentDate)
+          ? Colors.black45
+          : Colors.black);
     } else {
       return null;
     }
+  }
+
+  bool isWeekend(currentDate) {
+    return currentDate.weekday == DateTime.sunday ||
+        currentDate.weekday == DateTime.saturday;
   }
 
   Decoration getDecoration(currentDate) {

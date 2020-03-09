@@ -1,3 +1,9 @@
+    ## [1.1.1] -  09 March 2020.
+
+    * You can use favorite color :tada:.
+    * You can support this library with buy some coffe to me :)
+    * Fix bug
+
     ## [1.1.0] -  07 March 2020.
 
     * You can use favorite color :tada:.

@@ -106,6 +106,13 @@ Range Mode, add to your code:
 | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi.jpg" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range.jpg" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single.jpg" width="379px;"/><br /><sub><b>Single</b></sub> |
 | :---: | :---: | :---: |
 
+
+## <a name="#gif"></a>Gif ##
+
+| <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi.gif" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range.gif" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single.gif" width="379px;"/><br /><sub><b>Single</b></sub> |
+| :---: | :---: | :---: |
+
+
 ## Help Maintenance
 I've taken the time to make this library, help support to develop it or buy me coffee and snacks to be even more enthusiastic
 <br/>

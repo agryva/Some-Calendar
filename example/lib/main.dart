@@ -33,7 +33,6 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -45,7 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -91,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 showDialog(
                     context: context,
                     builder: (_) => SomeCalendar(
+                          primaryColor: Colors.red,
                           mode: SomeMode.Single,
                           selectedDate: selectedDate,
                           startDate: Jiffy().subtract(years: 3),
@@ -135,17 +134,17 @@ class _MyHomePageState extends State<MyHomePage> {
               showDialog(
                   context: context,
                   builder: (_) => SomeCalendar(
-                    mode: SomeMode.Range,
-                    startDate: Jiffy().subtract(years: 3),
-                    lastDate: Jiffy().add(months: 9),
-                    selectedDates: selectedDates,
-                    done: (date) {
-                      setState(() {
-                        selectedDates = date;
-                        showSnackbar(selectedDates.toString());
-                      });
-                    },
-                  )).then((s) {
+                        mode: SomeMode.Range,
+                        startDate: Jiffy().subtract(years: 3),
+                        lastDate: Jiffy().add(months: 9),
+                        selectedDates: selectedDates,
+                        done: (date) {
+                          setState(() {
+                            selectedDates = date;
+                            showSnackbar(selectedDates.toString());
+                          });
+                        },
+                      )).then((s) {
                 print("test1 $selectedDates");
               });
             },
@@ -156,6 +155,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void showSnackbar(String x) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(x),));
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(x),
+    ));
   }
 }

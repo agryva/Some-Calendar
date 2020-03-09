@@ -19,6 +19,7 @@ class SomeCalendar extends StatefulWidget {
   DateTime lastDate;
   DateTime selectedDate;
   List<DateTime> selectedDates;
+  final Color primaryColor;
 
   SomeCalendar(
       {@required this.mode,
@@ -26,7 +27,8 @@ class SomeCalendar extends StatefulWidget {
       this.lastDate,
       this.done,
       this.selectedDate,
-      this.selectedDates}) {
+      this.selectedDates,
+      this.primaryColor}) {
     DateTime now = Jiffy().dateTime;
     assert(mode != null);
     if (startDate == null) startDate = SomeUtils.getStartDateDefault();
@@ -44,7 +46,8 @@ class SomeCalendar extends StatefulWidget {
       mode: mode,
       done: done,
       selectedDates: selectedDates,
-      selectedDate: selectedDate);
+      selectedDate: selectedDate,
+      primaryColor: primaryColor);
 
   static SomeCalendarState of(BuildContext context) =>
       context.findAncestorStateOfType();
