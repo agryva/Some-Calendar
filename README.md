@@ -98,7 +98,7 @@ Range Mode, add to your code:
 | startDate| `Date`     | |
 | lastDate| `Date`     | |
 | selectedDate       | `Date`     | Date.now() |
-| selectedDates| `Date`     | Date.now() + 4 days|
+| selectedDates| `Date[]`     | Date.now() + 4 days|
 | mode| `SomeMode`     |  |
 
 ## <a name="#screenshot"></a>Screenshoot ##
