@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class SomeWeekLabelEN extends StatelessWidget {
-
-
-  final Color primaryColor;
-
-  const SomeWeekLabelEN({Key key, this.primaryColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,5 +40,5 @@ class SomeWeekLabelEN extends StatelessWidget {
       fontSize: 14.2,
       fontWeight: FontWeight.w600,
       letterSpacing: 1,
-      color: primaryColor);
+      color: Colors.black);
 }

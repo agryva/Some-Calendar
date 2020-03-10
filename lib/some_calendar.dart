@@ -29,6 +29,7 @@ class SomeCalendar extends StatefulWidget {
       this.selectedDate,
       this.selectedDates,
       this.primaryColor}) {
+    print("selectedates, $selectedDates");
     DateTime now = Jiffy().dateTime;
     assert(mode != null);
     if (startDate == null) startDate = SomeUtils.getStartDateDefault();
@@ -92,10 +93,23 @@ class SomeCalendarState extends State<SomeCalendar> {
       this.selectedDates,
       this.mode,
       this.primaryColor}) {
+
     now = Jiffy().dateTime;
-    if (primaryColor == null) {
-      primaryColor = Color(0xff365535);
+
+    if (mode == SomeMode.Multi || mode == SomeMode.Range) {
+      if (selectedDates.length > 0) {
+        List<DateTime> tempListDates = List();
+        for (var value in selectedDates) {
+          tempListDates.add(SomeUtils.setToMidnight(value));
+        }
+        selectedDates.clear();
+        selectedDates.addAll(tempListDates);
+      }
+    } else {
+      selectedDate = SomeUtils.setToMidnight(selectedDate);
     }
+
+    if (primaryColor == null) primaryColor = Color(0xff365535);
     if (mode == SomeMode.Range) {
       if (selectedDates == null) {
         firstRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
@@ -124,6 +138,7 @@ class SomeCalendarState extends State<SomeCalendar> {
               Jiffy(DateTime(now.year, now.month, now.day)).add(days: 4);
         }
       }
+
       isSelectedModeFirstDateRange = true;
       dateFirstDate = Jiffy(firstRangeDate).format("dd");
       monthFirstDate = Jiffy(firstRangeDate).format("MMM");
@@ -340,8 +355,8 @@ class SomeCalendarState extends State<SomeCalendar> {
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 color: isSelectedModeFirstDateRange
-                                    ? primaryColor
-                                    : primaryColor.withAlpha(150),
+                                    ? Colors.black
+                                    : Colors.black.withAlpha(150),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
@@ -374,8 +389,8 @@ class SomeCalendarState extends State<SomeCalendar> {
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 color: isSelectedModeFirstDateRange
-                                    ? primaryColor.withAlpha(150)
-                                    : primaryColor,
+                                    ? Colors.black.withAlpha(150)
+                                    : Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
@@ -459,7 +474,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                     fontSize: 14.2,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1,
-                    color: primaryColor),
+                    color: Colors.black),
               ),
             ],
             SizedBox(

@@ -12,7 +12,7 @@ class SomeUtils {
   }
 
   static DateTime setToMidnight(DateTime date) {
-    return DateTime(date.year, date.month);
+    return DateTime(date.year, date.month, date.day);
   }
 
   static int getCountFromDiffDate(DateTime firstDate, DateTime lastDate) {

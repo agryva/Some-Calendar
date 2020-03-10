@@ -43,6 +43,11 @@ class _MyHomePageState extends State<MyHomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -89,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 showDialog(
                     context: context,
                     builder: (_) => SomeCalendar(
-                          primaryColor: Colors.red,
+                          primaryColor: Color(0xff5833A5),
                           mode: SomeMode.Single,
                           selectedDate: selectedDate,
                           startDate: Jiffy().subtract(years: 3),
@@ -135,6 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   context: context,
                   builder: (_) => SomeCalendar(
                         mode: SomeMode.Range,
+                        primaryColor: Color(0xff5833A5),
                         startDate: Jiffy().subtract(years: 3),
                         lastDate: Jiffy().add(months: 9),
                         selectedDates: selectedDates,

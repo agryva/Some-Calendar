@@ -1,18 +1,12 @@
 # some calendar
 [![pub package](https://img.shields.io/pub/v/some_calendar.svg)](https://pub.dev/packages/some_calendar#-readme-tab-)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+[![support](https://img.shields.io/badge/platform-flutter%7Cflutter%20web-ff69b4.svg?style=flat-square)](https://github.com/agryva/Some-Calendar)
 
-Custom calendar (multi select, single select, date range) for Flutter
-
+Custom calendar dialog widget for flutter with (multi select, single select, date range) mode
 
 ## New Features
 + You can use favorite color :tada:.
-
-## Table of contents
-
-* [Screenshoot](#screenshot)
-* [Getting Started](#getting-started)
-
 
 ## <a name="#screenshot"></a>Screenshoot ##
 
@@ -34,7 +28,6 @@ Add dependency to your pubspec.yaml:
 ```dart
 some_calendar: ^{latest_version}
 ```
-
 
 ### Basic use
 First, add an import to your code:
