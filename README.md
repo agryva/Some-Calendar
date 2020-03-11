@@ -9,13 +9,13 @@ Custom calendar dialog widget for flutter with (multi select, single select, dat
 + Somecalendar without dialog are available  :tada:.
 + you can set Scroll direction in Somecalendar.
 
-## <a name="#gif"></a>Gif Somecalendar (without Dialog)##
+## <a name="#gif"></a>Gif Somecalendar (without Dialog)
 
 | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi_without.gif" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range_without.gif" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single_without.gif" width="379px;"/><br /><sub><b>Single</b></sub> |
 | :---: | :---: | :---: |
 
 
-## <a name="#gifDialog"></a>Gif Somecalendar (Dialog)##
+## <a name="#gifDialog"></a>Gif Somecalendar (Dialog)
 
 | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi.gif" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range.gif" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single.gif" width="379px;"/><br /><sub><b>Single</b></sub> |
 | :---: | :---: | :---: |
