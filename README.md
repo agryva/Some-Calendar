@@ -44,6 +44,7 @@ Single Mode, add to your code:
         child: SomeCalendar(
             primaryColor: Color(0xff5833A5),
             mode: SomeMode.Single,
+            scrollDirection: Axis.horizontal,
             isWithoutDialog: true,
             selectedDate: selectedDate,
             startDate: Jiffy().subtract(years: 3),
@@ -175,6 +176,7 @@ Range Mode, add to your code:
 | selectedDate       | `Date`     | Date.now() |
 | selectedDates| `Date[]`     | Date.now() + 4 days|
 | isWithoutDialog| `bool`     | true|
+| scrollDirection| `Axis`     | Axis.vertical|
 | mode| `SomeMode`     |  |
 
 

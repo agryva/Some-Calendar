@@ -19,6 +19,7 @@ class SomeCalendar extends StatefulWidget {
   DateTime lastDate;
   DateTime selectedDate;
   List<DateTime> selectedDates;
+  final Axis scrollDirection;
   final Color primaryColor;
   final bool isWithoutDialog;
 
@@ -30,7 +31,8 @@ class SomeCalendar extends StatefulWidget {
       this.selectedDate,
       this.selectedDates,
       this.primaryColor,
-      this.isWithoutDialog}) {
+      this.isWithoutDialog,
+      this.scrollDirection}) {
     DateTime now = Jiffy().dateTime;
     assert(mode != null);
     if (startDate == null) startDate = SomeUtils.getStartDateDefault();
@@ -50,7 +52,8 @@ class SomeCalendar extends StatefulWidget {
       selectedDates: selectedDates,
       selectedDate: selectedDate,
       primaryColor: primaryColor,
-      isWithoutDialog: isWithoutDialog);
+      isWithoutDialog: isWithoutDialog,
+      scrollDirection: scrollDirection);
 
   static SomeCalendarState of(BuildContext context) =>
       context.findAncestorStateOfType();
@@ -87,6 +90,7 @@ class SomeCalendarState extends State<SomeCalendar> {
   bool isSelectedModeFirstDateRange;
   Color primaryColor;
   bool isWithoutDialog;
+  Axis scrollDirection;
 
   SomeCalendarState(
       {@required this.done,
@@ -96,9 +100,11 @@ class SomeCalendarState extends State<SomeCalendar> {
       this.selectedDates,
       this.mode,
       this.primaryColor,
-      this.isWithoutDialog}) {
+      this.isWithoutDialog,
+      this.scrollDirection}) {
     now = Jiffy().dateTime;
 
+    if (scrollDirection == null) scrollDirection = Axis.vertical;
     if (isWithoutDialog == null) isWithoutDialog = true;
     if (mode == SomeMode.Multi || mode == SomeMode.Range) {
       if (selectedDates.length > 0) {
@@ -184,7 +190,7 @@ class SomeCalendarState extends State<SomeCalendar> {
 
     pageView = PageView.builder(
       controller: controller,
-      scrollDirection: Axis.vertical,
+      scrollDirection: scrollDirection,
       itemCount: pagesCount,
       onPageChanged: (index) {
         SomeDateRange someDateRange = getDateRange(index);
@@ -237,7 +243,6 @@ class SomeCalendarState extends State<SomeCalendar> {
   }
 
   void onCallback(DateTime a) {
-
     if (mode == SomeMode.Multi) {
       if (selectedDates.contains(a))
         selectedDates.remove(a);
