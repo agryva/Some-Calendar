@@ -1,7 +1,10 @@
+import 'package:example/main_single_without_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:some_calendar/some_calendar.dart';
+
+import 'main_multi_without_dialog.dart';
+import 'main_range_without_dialog.dart';
 
 void main() => runApp(MyApp());
 
@@ -54,108 +57,138 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'SomeCalendar',
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-          ],
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Center(
+                child: Text(
+                  'SomeCalendar Dialog',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("Single"),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) => SomeCalendar(
+                                primaryColor: Color(0xff5833A5),
+                                mode: SomeMode.Single,
+                                isWithoutDialog: false,
+                                selectedDate: selectedDate,
+                                startDate: Jiffy().subtract(years: 3),
+                                lastDate: Jiffy().add(months: 9),
+                                done: (date) {
+                                  setState(() {
+                                    selectedDate = date;
+                                    showSnackbar(selectedDate.toString());
+                                  });
+                                },
+                              ));
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text("Multi"),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) => SomeCalendar(
+                                mode: SomeMode.Multi,
+                                startDate: Jiffy().subtract(years: 3),
+                                lastDate: Jiffy().add(months: 9),
+                                isWithoutDialog: false,
+                                selectedDates: selectedDates,
+                                done: (date) {
+                                  setState(() {
+                                    selectedDates = date;
+                                    showSnackbar(selectedDates.toString());
+                                  });
+                                },
+                              ));
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text("Range"),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) => SomeCalendar(
+                                mode: SomeMode.Range,
+                                primaryColor: Color(0xff5833A5),
+                                startDate: Jiffy().subtract(years: 3),
+                                lastDate: Jiffy().add(months: 9),
+                                selectedDates: selectedDates,
+                                isWithoutDialog: false,
+                                done: (date) {
+                                  setState(() {
+                                    selectedDates = date;
+                                    showSnackbar(selectedDates.toString());
+                                  });
+                                },
+                              ));
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Center(
+                child: Text(
+                  'SomeCalendar without Dialog',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("Single "),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainSingleWithoutDialog()),
+                      );
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text("Multi "),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainMultiWithoutDialog()),
+                      );
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text("Range"),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainRangeWithoutDialog()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: SpeedDial(
-        // both default to 16
-        marginRight: 18,
-        marginBottom: 20,
-        animatedIcon: AnimatedIcons.menu_close,
-        animatedIconTheme: IconThemeData(size: 22.0),
-        closeManually: false,
-        curve: Curves.bounceIn,
-        overlayColor: Colors.black,
-        overlayOpacity: 0.5,
-        tooltip: 'Some calendar',
-        heroTag: 'Some-calendar',
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 8.0,
-        shape: CircleBorder(),
-        children: [
-          SpeedDialChild(
-              child: Icon(Icons.calendar_today),
-              backgroundColor: Colors.red,
-              label: 'Single',
-              labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (_) => SomeCalendar(
-                          primaryColor: Color(0xff5833A5),
-                          mode: SomeMode.Single,
-                          selectedDate: selectedDate,
-                          startDate: Jiffy().subtract(years: 3),
-                          lastDate: Jiffy().add(months: 9),
-                          done: (date) {
-                            setState(() {
-                              selectedDate = date;
-                              showSnackbar(selectedDate.toString());
-                            });
-                          },
-                        ));
-              }),
-          SpeedDialChild(
-            child: Icon(Icons.calendar_today),
-            backgroundColor: Colors.blue,
-            label: 'Multi',
-            labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (_) => SomeCalendar(
-                        mode: SomeMode.Multi,
-                        startDate: Jiffy().subtract(years: 3),
-                        lastDate: Jiffy().add(months: 9),
-                        selectedDates: selectedDates,
-                        done: (date) {
-                          setState(() {
-                            selectedDates = date;
-                            showSnackbar(selectedDates.toString());
-                          });
-                        },
-                      ));
-            },
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.calendar_today),
-            backgroundColor: Colors.green,
-            label: 'Range',
-            labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () {
-              print("test $selectedDates");
-              showDialog(
-                  context: context,
-                  builder: (_) => SomeCalendar(
-                        mode: SomeMode.Range,
-                        primaryColor: Color(0xff5833A5),
-                        startDate: Jiffy().subtract(years: 3),
-                        lastDate: Jiffy().add(months: 9),
-                        selectedDates: selectedDates,
-                        done: (date) {
-                          setState(() {
-                            selectedDates = date;
-                            showSnackbar(selectedDates.toString());
-                          });
-                        },
-                      )).then((s) {
-                print("test1 $selectedDates");
-              });
-            },
-          ),
-        ],
       ),
     );
   }
