@@ -1,3 +1,7 @@
+## [1.2.0] -  11 March 2020.
+   * Somecalendar without dialog are available .
+   * you can set Scroll direction in Somecalendar.
+
 ## [1.1.3] -  10 March 2020.
     * Fix bug selected dates are not updating
 

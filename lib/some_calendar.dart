@@ -19,7 +19,9 @@ class SomeCalendar extends StatefulWidget {
   DateTime lastDate;
   DateTime selectedDate;
   List<DateTime> selectedDates;
+  final Axis scrollDirection;
   final Color primaryColor;
+  final bool isWithoutDialog;
 
   SomeCalendar(
       {@required this.mode,
@@ -28,8 +30,9 @@ class SomeCalendar extends StatefulWidget {
       this.done,
       this.selectedDate,
       this.selectedDates,
-      this.primaryColor}) {
-    print("selectedates, $selectedDates");
+      this.primaryColor,
+      this.isWithoutDialog,
+      this.scrollDirection}) {
     DateTime now = Jiffy().dateTime;
     assert(mode != null);
     if (startDate == null) startDate = SomeUtils.getStartDateDefault();
@@ -48,7 +51,9 @@ class SomeCalendar extends StatefulWidget {
       done: done,
       selectedDates: selectedDates,
       selectedDate: selectedDate,
-      primaryColor: primaryColor);
+      primaryColor: primaryColor,
+      isWithoutDialog: isWithoutDialog,
+      scrollDirection: scrollDirection);
 
   static SomeCalendarState of(BuildContext context) =>
       context.findAncestorStateOfType();
@@ -84,6 +89,8 @@ class SomeCalendarState extends State<SomeCalendar> {
   DateTime now;
   bool isSelectedModeFirstDateRange;
   Color primaryColor;
+  bool isWithoutDialog;
+  Axis scrollDirection;
 
   SomeCalendarState(
       {@required this.done,
@@ -92,10 +99,13 @@ class SomeCalendarState extends State<SomeCalendar> {
       this.selectedDate,
       this.selectedDates,
       this.mode,
-      this.primaryColor}) {
-
+      this.primaryColor,
+      this.isWithoutDialog,
+      this.scrollDirection}) {
     now = Jiffy().dateTime;
 
+    if (scrollDirection == null) scrollDirection = Axis.vertical;
+    if (isWithoutDialog == null) isWithoutDialog = true;
     if (mode == SomeMode.Multi || mode == SomeMode.Range) {
       if (selectedDates.length > 0) {
         List<DateTime> tempListDates = List();
@@ -180,7 +190,7 @@ class SomeCalendarState extends State<SomeCalendar> {
 
     pageView = PageView.builder(
       controller: controller,
-      scrollDirection: Axis.vertical,
+      scrollDirection: scrollDirection,
       itemCount: pagesCount,
       onPageChanged: (index) {
         SomeDateRange someDateRange = getDateRange(index);
@@ -215,7 +225,10 @@ class SomeCalendarState extends State<SomeCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    return show();
+    if (isWithoutDialog)
+      return withoutDialog();
+    else
+      return show();
   }
 
   int getInitialController() {
@@ -238,12 +251,18 @@ class SomeCalendarState extends State<SomeCalendar> {
       selectedDates.sort((a, b) {
         return a.compareTo(b);
       });
+      if (isWithoutDialog) {
+        done(selectedDates);
+      }
     } else if (mode == SomeMode.Single) {
       selectedDate = a;
       setState(() {
         dateFirstDate = Jiffy(selectedDate).format("dd");
         monthFirstDate = Jiffy(selectedDate).format("MMM");
         yearFirstDate = Jiffy(selectedDate).format("yyyy");
+        if (isWithoutDialog) {
+          done(selectedDate);
+        }
       });
     } else {
       if (isSelectedModeFirstDateRange) {
@@ -271,6 +290,10 @@ class SomeCalendarState extends State<SomeCalendar> {
         monthEndDate = Jiffy(endRangeDate).format("MMM");
         yearEndDate = Jiffy(endRangeDate).format("yyyy");
       });
+
+      if (isWithoutDialog) {
+        done(selectedDates);
+      }
     }
   }
 
@@ -313,6 +336,38 @@ class SomeCalendarState extends State<SomeCalendar> {
       pageEndDate = a.dateTime;
     }
     return SomeDateRange(pageStartDate, pageEndDate);
+  }
+
+  withoutDialog() {
+    var heightContainer = mode == SomeMode.Range ? 55 * 6 : 55 * 6;
+    return Container(
+      height: heightContainer.toDouble(),
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        children: <Widget>[
+          Text(
+            "$month, $year",
+            style: TextStyle(
+                fontFamily: "playfair-regular",
+                fontSize: 14.2,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1,
+                color: Colors.black),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Expanded(
+            child: ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                Container(height: heightContainer.toDouble(), child: pageView),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   show() {
