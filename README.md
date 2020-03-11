@@ -171,12 +171,12 @@ Range Mode, add to your code:
 | parameter                   | types           | defaultValues                                                                                                     |
 | :---------------------- | :-------------: | :---------------------------------------------------------------------------------------------------------------: |
 | primaryColor        | `color`        | Color(0xff365535) |
-| startDate| `Date`     | |
-| lastDate| `Date`     | |
 | selectedDate       | `Date`     | Date.now() |
 | selectedDates| `Date[]`     | Date.now() + 4 days|
 | isWithoutDialog| `bool`     | true|
 | scrollDirection| `Axis`     | Axis.vertical|
+| startDate| `Date`     | |
+| lastDate| `Date`     | |
 | mode| `SomeMode`     |  |
 
 
