@@ -6,8 +6,7 @@
 Custom calendar dialog widget for flutter with (multi select, single select, date range) mode
 
 ## New Features
-+ Somecalendar without dialog are available  :tada:.
-+ you can set Scroll direction in Somecalendar.
++ you can set textPrimaryColor  :tada:.
 
 ## <a name="#gif"></a>Gif Somecalendar (without Dialog)
 
@@ -171,6 +170,7 @@ Range Mode, add to your code:
 | parameter                   | types           | defaultValues                                                                                                     |
 | :---------------------- | :-------------: | :---------------------------------------------------------------------------------------------------------------: |
 | primaryColor        | `color`        | Color(0xff365535) |
+| textColor        | `color`        | Colors.black |
 | selectedDate       | `Date`     | Date.now() |
 | selectedDates| `Date[]`     | Date.now() + 4 days|
 | isWithoutDialog| `bool`     | true|

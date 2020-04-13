@@ -21,18 +21,19 @@ class SomeCalendar extends StatefulWidget {
   List<DateTime> selectedDates;
   final Axis scrollDirection;
   final Color primaryColor;
+  final Color textColor;
   final bool isWithoutDialog;
 
-  SomeCalendar(
-      {@required this.mode,
-      this.startDate,
-      this.lastDate,
-      this.done,
-      this.selectedDate,
-      this.selectedDates,
-      this.primaryColor,
-      this.isWithoutDialog,
-      this.scrollDirection}) {
+  SomeCalendar({@required this.mode,
+    this.startDate,
+    this.lastDate,
+    this.done,
+    this.selectedDate,
+    this.selectedDates,
+    this.primaryColor,
+    this.textColor,
+    this.isWithoutDialog,
+    this.scrollDirection}) {
     DateTime now = Jiffy().dateTime;
     assert(mode != null);
     if (startDate == null) startDate = SomeUtils.getStartDateDefault();
@@ -44,16 +45,18 @@ class SomeCalendar extends StatefulWidget {
   }
 
   @override
-  SomeCalendarState createState() => SomeCalendarState(
-      lastDate: lastDate,
-      startDate: startDate,
-      mode: mode,
-      done: done,
-      selectedDates: selectedDates,
-      selectedDate: selectedDate,
-      primaryColor: primaryColor,
-      isWithoutDialog: isWithoutDialog,
-      scrollDirection: scrollDirection);
+  SomeCalendarState createState() =>
+      SomeCalendarState(
+          lastDate: lastDate,
+          startDate: startDate,
+          mode: mode,
+          done: done,
+          textColor: textColor,
+          selectedDates: selectedDates,
+          selectedDate: selectedDate,
+          primaryColor: primaryColor,
+          isWithoutDialog: isWithoutDialog,
+          scrollDirection: scrollDirection);
 
   static SomeCalendarState of(BuildContext context) =>
       context.findAncestorStateOfType();
@@ -89,19 +92,20 @@ class SomeCalendarState extends State<SomeCalendar> {
   DateTime now;
   bool isSelectedModeFirstDateRange;
   Color primaryColor;
+  Color textColor;
   bool isWithoutDialog;
   Axis scrollDirection;
 
-  SomeCalendarState(
-      {@required this.done,
-      this.startDate,
-      this.lastDate,
-      this.selectedDate,
-      this.selectedDates,
-      this.mode,
-      this.primaryColor,
-      this.isWithoutDialog,
-      this.scrollDirection}) {
+  SomeCalendarState({@required this.done,
+    this.startDate,
+    this.lastDate,
+    this.selectedDate,
+    this.selectedDates,
+    this.mode,
+    this.primaryColor,
+    this.textColor,
+    this.isWithoutDialog,
+    this.scrollDirection}) {
     now = Jiffy().dateTime;
 
     if (scrollDirection == null) scrollDirection = Axis.vertical;
@@ -119,6 +123,7 @@ class SomeCalendarState extends State<SomeCalendar> {
       selectedDate = SomeUtils.setToMidnight(selectedDate);
     }
 
+    if (textColor == null) textColor = Colors.black;
     if (primaryColor == null) primaryColor = Color(0xff365535);
     if (mode == SomeMode.Range) {
       if (selectedDates == null) {
@@ -130,7 +135,9 @@ class SomeCalendarState extends State<SomeCalendar> {
         if (selectedDates.length > 0) {
           dateRange = selectedDates[0];
         }
-        if (dateRange.difference(startDate).inDays >= 0) {
+        if (dateRange
+            .difference(startDate)
+            .inDays >= 0) {
           if (selectedDates.length > 0) {
             firstRangeDate = Jiffy(selectedDates[0]).dateTime;
             endRangeDate =
@@ -161,8 +168,8 @@ class SomeCalendarState extends State<SomeCalendar> {
         generateListDateRange();
       else {
         var diff = selectedDates[selectedDates.length - 1]
-                .difference(selectedDates[0])
-                .inDays +
+            .difference(selectedDates[0])
+            .inDays +
             1;
         var date = selectedDates[0];
         selectedDates.clear();
@@ -210,13 +217,14 @@ class SomeCalendarState extends State<SomeCalendar> {
         SomeDateRange someDateRange = getDateRange(index);
         return Container(
             child: SomeCalendarPage(
-          startDate: someDateRange.startDate,
-          lastDate: someDateRange.endDate,
-          onTapFunction: onCallback,
-          state: SomeCalendar.of(context),
-          mode: mode,
-          primaryColor: primaryColor,
-        ));
+              startDate: someDateRange.startDate,
+              lastDate: someDateRange.endDate,
+              onTapFunction: onCallback,
+              state: SomeCalendar.of(context),
+              mode: mode,
+              primaryColor: primaryColor,
+              textColor: textColor,
+            ));
       },
     );
 
@@ -235,7 +243,9 @@ class SomeCalendarState extends State<SomeCalendar> {
     if (selectedDate == null) {
       return SomeUtils.getDiffMonth(startDate, Jiffy().dateTime);
     } else {
-      if (selectedDate.difference(startDate).inDays >= 0)
+      if (selectedDate
+          .difference(startDate)
+          .inDays >= 0)
         return SomeUtils.getDiffMonth(startDate, selectedDate);
       else
         return SomeUtils.getDiffMonth(startDate, Jiffy().dateTime);
@@ -298,7 +308,9 @@ class SomeCalendarState extends State<SomeCalendar> {
   }
 
   void generateListDateRange() {
-    var diff = endRangeDate.difference(firstRangeDate).inDays + 1;
+    var diff = endRangeDate
+        .difference(firstRangeDate)
+        .inDays + 1;
     var date = firstRangeDate;
     for (int i = 0; i < diff; i++) {
       selectedDates.add(date);
@@ -327,8 +339,8 @@ class SomeCalendarState extends State<SomeCalendar> {
       pageEndDate = Jiffy(lastDate).subtract(days: 1);
     } else {
       var firstDateOfCurrentMonth =
-          Jiffy(DateTime(startDate.year, startDate.month))
-            ..add(months: position);
+      Jiffy(DateTime(startDate.year, startDate.month))
+        ..add(months: position);
       pageStartDate = firstDateOfCurrentMonth.dateTime;
       var a = firstDateOfCurrentMonth
         ..add(months: 1)
@@ -342,7 +354,10 @@ class SomeCalendarState extends State<SomeCalendar> {
     var heightContainer = mode == SomeMode.Range ? 55 * 6 : 55 * 6;
     return Container(
       height: heightContainer.toDouble(),
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
       child: Column(
         children: <Widget>[
           Text(
@@ -352,7 +367,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                 fontSize: 14.2,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1,
-                color: Colors.black),
+                color: textColor),
           ),
           SizedBox(
             height: 16,
@@ -400,7 +415,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 fontSize: 12,
-                                color: Colors.black),
+                                color: textColor),
                           ),
                           SizedBox(
                             height: 2,
@@ -410,8 +425,8 @@ class SomeCalendarState extends State<SomeCalendar> {
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 color: isSelectedModeFirstDateRange
-                                    ? Colors.black
-                                    : Colors.black.withAlpha(150),
+                                    ? textColor
+                                    : textColor.withAlpha(150),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
@@ -434,7 +449,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 fontSize: 12,
-                                color: Colors.black),
+                                color: textColor),
                           ),
                           SizedBox(
                             height: 2,
@@ -444,8 +459,8 @@ class SomeCalendarState extends State<SomeCalendar> {
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 color: isSelectedModeFirstDateRange
-                                    ? Colors.black.withAlpha(150)
-                                    : Colors.black,
+                                    ? textColor.withAlpha(150)
+                                    : textColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
@@ -453,53 +468,55 @@ class SomeCalendarState extends State<SomeCalendar> {
                       ),
                     ),
                   ),
-                ] else if (mode == SomeMode.Single) ...[
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Selected Date",
-                          style: TextStyle(
-                              fontFamily: "playfair-regular",
-                              fontSize: 12,
-                              color: Colors.black),
-                        ),
-                        Text(
-                          "$dateFirstDate $monthFirstDate, $yearFirstDate",
-                          style: TextStyle(
-                              fontFamily: "playfair-regular",
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                      ],
+                ] else
+                  if (mode == SomeMode.Single) ...[
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Selected Date",
+                            style: TextStyle(
+                                fontFamily: "playfair-regular",
+                                fontSize: 12,
+                                color: textColor),
+                          ),
+                          Text(
+                            "$dateFirstDate $monthFirstDate, $yearFirstDate",
+                            style: TextStyle(
+                                fontFamily: "playfair-regular",
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ] else ...[
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Selected Date",
-                          style: TextStyle(
-                              fontFamily: "playfair-regular",
-                              fontSize: 12,
-                              color: Colors.black),
+                  ] else
+                    ...[
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Selected Date",
+                              style: TextStyle(
+                                  fontFamily: "playfair-regular",
+                                  fontSize: 12,
+                                  color: textColor),
+                            ),
+                            Text(
+                              "$monthFirstDate, $yearFirstDate",
+                              style: TextStyle(
+                                  fontFamily: "playfair-regular",
+                                  color: textColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "$monthFirstDate, $yearFirstDate",
-                          style: TextStyle(
-                              fontFamily: "playfair-regular",
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ),
-                ]
+                      ),
+                    ]
               ],
             ),
           ),
@@ -518,7 +535,10 @@ class SomeCalendarState extends State<SomeCalendar> {
       contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 10),
       content: Container(
         height: heightContainer.toDouble(),
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         child: Column(
           children: <Widget>[
             if (mode != SomeMode.Multi) ...[
@@ -529,7 +549,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                     fontSize: 14.2,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1,
-                    color: Colors.black),
+                    color: textColor),
               ),
             ],
             SizedBox(

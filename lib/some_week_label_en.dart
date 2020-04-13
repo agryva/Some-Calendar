@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SomeWeekLabelEN extends StatelessWidget {
+  final Color textColor;
+
+  const SomeWeekLabelEN({Key key, this.textColor}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -39,5 +43,5 @@ class SomeWeekLabelEN extends StatelessWidget {
       fontSize: 14.2,
       fontWeight: FontWeight.w600,
       letterSpacing: 1,
-      color: Colors.black);
+      color: textColor);
 }

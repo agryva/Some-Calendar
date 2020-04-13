@@ -10,6 +10,7 @@ class SomeCalendarPage extends StatefulWidget {
   final SomeCalendarState state;
   final SomeMode mode;
   final Color primaryColor;
+  final Color textColor;
 
   SomeCalendarPage(
       {Key key,
@@ -18,7 +19,8 @@ class SomeCalendarPage extends StatefulWidget {
       this.onTapFunction,
       this.state,
       this.mode,
-      this.primaryColor});
+      this.primaryColor,
+      this.textColor});
 
   @override
   _SomeCalendarPageState createState() => _SomeCalendarPageState(
@@ -27,7 +29,8 @@ class SomeCalendarPage extends StatefulWidget {
       onTapFunction: onTapFunction,
       state: state,
       mode: mode,
-      primaryColor: primaryColor);
+      primaryColor: primaryColor,
+      textColor: textColor);
 }
 
 class _SomeCalendarPageState extends State<SomeCalendarPage> {
@@ -37,6 +40,7 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
   final SomeCalendarState state;
   final SomeMode mode;
   final Color primaryColor;
+  final Color textColor;
 
   int startDayOffset = 0;
   List<DateTime> selectedDates;
@@ -48,7 +52,8 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
       this.onTapFunction,
       this.state,
       this.mode,
-      this.primaryColor});
+      this.primaryColor,
+      this.textColor});
 
   @override
   void initState() {
@@ -63,7 +68,7 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
       selectedDate = state.selectedDate;
     }
     List<Widget> rows = [];
-    rows.add(SomeWeekLabelEN());
+    rows.add(SomeWeekLabelEN(textColor: textColor,));
 
     var dateTime = Jiffy(startDate);
     for (int i = 1; i < 7; i++) {
@@ -160,11 +165,11 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
     if (mode == SomeMode.Multi || mode == SomeMode.Range) {
       return selectedDates.contains(currentDate)
           ? Colors.white
-          : (isWeekend(currentDate) ? Colors.black45 : Colors.black);
+          : (isWeekend(currentDate) ? textColor.withAlpha(222) : textColor);
     } else if (mode == SomeMode.Single) {
       return selectedDate == currentDate
           ? Colors.white
-          : (isWeekend(currentDate) ? Colors.black45 : Colors.black);
+          : (isWeekend(currentDate) ? textColor.withAlpha(222) : textColor);
     } else {
       return null;
     }

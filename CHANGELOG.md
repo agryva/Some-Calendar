@@ -1,3 +1,6 @@
+## [1.2.2] -  13 April 2020.
+   * you can set textPrimaryColor
+
 ## [1.2.0] -  11 March 2020.
    * Somecalendar without dialog are available .
    * you can set Scroll direction in Somecalendar.
