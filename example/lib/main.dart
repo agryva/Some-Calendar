@@ -88,6 +88,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (_) => SomeCalendar(
                                 primaryColor: Color(0xff5833A5),
                                 mode: SomeMode.Single,
+                                labels: new Labels(
+                                  dialogDone: 'Wybierz',
+                                  dialogCancel: 'Anuluj',
+                                ),
                                 isWithoutDialog: false,
                                 selectedDate: selectedDate,
                                 startDate: Jiffy().subtract(years: 3),
@@ -128,6 +132,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           context: context,
                           builder: (_) => SomeCalendar(
                                 mode: SomeMode.Range,
+                                labels: new Labels(
+                                  dialogRangeFirstDate: 'Od:',
+                                  dialogRangeLastDate: 'Do:',
+                                  dialogDone: 'Wybierz',
+                                  dialogCancel: 'Anuluj',
+                                ),
                                 primaryColor: Color(0xff5833A5),
                                 startDate: Jiffy().subtract(years: 3),
                                 lastDate: Jiffy().add(months: 9),
