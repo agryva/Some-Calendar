@@ -1,4 +1,4 @@
-import 'package:example/main_single_without_dialog.dart';
+// import 'package:example/main_single_without_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -6,8 +6,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:some_calendar/some_calendar.dart';
 
-import 'main_multi_without_dialog.dart';
-import 'main_range_without_dialog.dart';
+// import 'main_multi_without_dialog.dart';
+// import 'main_range_without_dialog.dart';
 
 void main() => runApp(MyApp());
 
@@ -156,41 +156,41 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(
                 height: 16,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text("Single "),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainSingleWithoutDialog()),
-                      );
-                    },
-                  ),
-                  RaisedButton(
-                    child: Text("Multi "),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainMultiWithoutDialog()),
-                      );
-                    },
-                  ),
-                  RaisedButton(
-                    child: Text("Range"),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainRangeWithoutDialog()),
-                      );
-                    },
-                  ),
-                ],
-              ),
+//              Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                children: <Widget>[
+//                  RaisedButton(
+//                    child: Text("Single "),
+//                    onPressed: () {
+//                      Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                            builder: (context) => MainSingleWithoutDialog()),
+//                      );
+//                    },
+//                  ),
+//                  RaisedButton(
+//                    child: Text("Multi "),
+//                    onPressed: () {
+//                      Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                            builder: (context) => MainMultiWithoutDialog()),
+//                      );
+//                    },
+//                  ),
+//                  RaisedButton(
+//                    child: Text("Range"),
+//                    onPressed: () {
+//                      Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                            builder: (context) => MainRangeWithoutDialog()),
+//                      );
+//                    },
+//                  ),
+//                ],
+//              ),
             ],
           ),
         ),
