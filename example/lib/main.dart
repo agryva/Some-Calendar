@@ -1,5 +1,8 @@
 import 'package:example/main_single_without_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 import 'package:jiffy/jiffy.dart';
 import 'package:some_calendar/some_calendar.dart';
 
@@ -47,6 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    initializeDateFormatting();
+    Intl.systemLocale = 'pl_PL';
     super.initState();
   }
 
