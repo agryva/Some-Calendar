@@ -1,3 +1,7 @@
+## [1.2.3] -  12 May 2020.
+   * Fix bug
+   * Can change weeks label format based on localization
+
 ## [1.2.2] -  13 April 2020.
    * you can set textPrimaryColor
 

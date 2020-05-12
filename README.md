@@ -6,7 +6,7 @@
 Custom calendar dialog widget for flutter with (multi select, single select, date range) mode
 
 ## New Features
-+ you can set textPrimaryColor  :tada:.
++ you can change weeks label format based on localization thank you :tada:. [digit81]
 
 ## <a name="#gif"></a>Gif Somecalendar (without Dialog)
 
@@ -33,6 +33,21 @@ some_calendar: ^{latest_version}
 First, add an import to your code:
 ```dart
 import 'package:some_calendar/some_calendar.dart';
+```
+
+### Setting Locale
+First, add an import to your code:
+```dart
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
+  @override
+  void initState() {
+    initializeDateFormatting();
+    Intl.systemLocale = 'en_En'; // to change the calendar format based on localization
+    super.initState();
+  }
+
 ```
 
 ### Without dialog
@@ -185,3 +200,4 @@ I've taken the time to make this library, help support to develop it or buy me c
 <br/>
 <a href="https://www.buymeacoffee.com/agryva" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 [![Paypal](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png)](https://paypal.me/agryva)
+[digit81]: https://github.com/digit81
