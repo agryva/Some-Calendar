@@ -6,7 +6,7 @@
 Custom calendar dialog widget for flutter with (multi select, single select, date range) mode
 
 ## New Features
-+ you can change weeks label format based on localization thank you :tada:. [digit81]
++ you can change weeks label format based on localization thank you :tada:. [digit81] (https://github.com/digit81)
 
 ## <a name="#gif"></a>Gif Somecalendar (without Dialog)
 
@@ -200,4 +200,3 @@ I've taken the time to make this library, help support to develop it or buy me c
 <br/>
 <a href="https://www.buymeacoffee.com/agryva" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 [![Paypal](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png)](https://paypal.me/agryva)
-[digit81]: https://github.com/digit81
