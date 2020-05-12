@@ -11,6 +11,18 @@ typedef void OnDoneFunction(date);
 
 enum SomeMode { Range, Single, Multi }
 
+class Labels {
+  final String dialogDone, dialogCancel, dialogRangeFirstDate, dialogRangeLastDate;
+
+  Labels({
+    this.dialogDone = 'Done',
+    this.dialogCancel = 'Cancel',
+    this.dialogRangeFirstDate = 'First Date',
+    this.dialogRangeLastDate = 'Last Date',
+  });
+}
+
+
 class SomeCalendar extends StatefulWidget {
   final SomeMode mode;
   final OnDoneFunction done;
@@ -24,6 +36,8 @@ class SomeCalendar extends StatefulWidget {
   final Color textColor;
   final bool isWithoutDialog;
 
+  final Labels labels;
+
   SomeCalendar({@required this.mode,
     this.startDate,
     this.lastDate,
@@ -33,6 +47,7 @@ class SomeCalendar extends StatefulWidget {
     this.primaryColor,
     this.textColor,
     this.isWithoutDialog,
+    this.labels,
     this.scrollDirection}) {
     DateTime now = Jiffy().dateTime;
     assert(mode != null);
@@ -56,6 +71,7 @@ class SomeCalendar extends StatefulWidget {
           selectedDate: selectedDate,
           primaryColor: primaryColor,
           isWithoutDialog: isWithoutDialog,
+          labels: labels,
           scrollDirection: scrollDirection);
 
   static SomeCalendarState of(BuildContext context) =>
@@ -96,6 +112,8 @@ class SomeCalendarState extends State<SomeCalendar> {
   bool isWithoutDialog;
   Axis scrollDirection;
 
+  Labels labels;
+
   SomeCalendarState({@required this.done,
     this.startDate,
     this.lastDate,
@@ -105,11 +123,14 @@ class SomeCalendarState extends State<SomeCalendar> {
     this.primaryColor,
     this.textColor,
     this.isWithoutDialog,
+    this.labels,
     this.scrollDirection}) {
     now = Jiffy().dateTime;
 
     if (scrollDirection == null) scrollDirection = Axis.vertical;
     if (isWithoutDialog == null) isWithoutDialog = true;
+    print(labels.toString());
+    if (labels == null) labels = new Labels();
     if (mode == SomeMode.Multi || mode == SomeMode.Range) {
       if (selectedDates.length > 0) {
         List<DateTime> tempListDates = List();
@@ -411,7 +432,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "First Date",
+                            labels.dialogRangeFirstDate,
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 fontSize: 12,
@@ -445,7 +466,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "last Date",
+                            labels.dialogRangeLastDate,
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 fontSize: 12,
@@ -584,7 +605,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                     child: Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 8),
                       child: Text(
-                        "Done",
+                        labels.dialogDone,
                         style: TextStyle(
                             fontFamily: "Avenir",
                             fontSize: 14,
@@ -605,7 +626,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 8, bottom: 8),
                     child: Text(
-                      "Cancel",
+                      labels.dialogCancel,
                       style: TextStyle(
                           fontFamily: "Avenir",
                           fontSize: 14,

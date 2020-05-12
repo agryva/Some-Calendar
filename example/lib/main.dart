@@ -1,10 +1,13 @@
-import 'package:example/main_single_without_dialog.dart';
+// import 'package:example/main_single_without_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 import 'package:jiffy/jiffy.dart';
 import 'package:some_calendar/some_calendar.dart';
 
-import 'main_multi_without_dialog.dart';
-import 'main_range_without_dialog.dart';
+// import 'main_multi_without_dialog.dart';
+// import 'main_range_without_dialog.dart';
 
 void main() => runApp(MyApp());
 
@@ -47,6 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    initializeDateFormatting();
+    Intl.systemLocale = 'pl_PL';
     super.initState();
   }
 
@@ -83,6 +88,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (_) => SomeCalendar(
                                 primaryColor: Color(0xff5833A5),
                                 mode: SomeMode.Single,
+                                labels: new Labels(
+                                  dialogDone: 'Wybierz',
+                                  dialogCancel: 'Anuluj',
+                                ),
                                 isWithoutDialog: false,
                                 selectedDate: selectedDate,
                                 startDate: Jiffy().subtract(years: 3),
@@ -123,6 +132,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           context: context,
                           builder: (_) => SomeCalendar(
                                 mode: SomeMode.Range,
+                                labels: new Labels(
+                                  dialogRangeFirstDate: 'Od:',
+                                  dialogRangeLastDate: 'Do:',
+                                  dialogDone: 'Wybierz',
+                                  dialogCancel: 'Anuluj',
+                                ),
                                 primaryColor: Color(0xff5833A5),
                                 startDate: Jiffy().subtract(years: 3),
                                 lastDate: Jiffy().add(months: 9),
@@ -151,41 +166,41 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(
                 height: 16,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text("Single "),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainSingleWithoutDialog()),
-                      );
-                    },
-                  ),
-                  RaisedButton(
-                    child: Text("Multi "),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainMultiWithoutDialog()),
-                      );
-                    },
-                  ),
-                  RaisedButton(
-                    child: Text("Range"),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainRangeWithoutDialog()),
-                      );
-                    },
-                  ),
-                ],
-              ),
+//              Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                children: <Widget>[
+//                  RaisedButton(
+//                    child: Text("Single "),
+//                    onPressed: () {
+//                      Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                            builder: (context) => MainSingleWithoutDialog()),
+//                      );
+//                    },
+//                  ),
+//                  RaisedButton(
+//                    child: Text("Multi "),
+//                    onPressed: () {
+//                      Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                            builder: (context) => MainMultiWithoutDialog()),
+//                      );
+//                    },
+//                  ),
+//                  RaisedButton(
+//                    child: Text("Range"),
+//                    onPressed: () {
+//                      Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                            builder: (context) => MainRangeWithoutDialog()),
+//                      );
+//                    },
+//                  ),
+//                ],
+//              ),
             ],
           ),
         ),

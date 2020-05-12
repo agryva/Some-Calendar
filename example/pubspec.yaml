@@ -27,6 +27,7 @@ dependencies:
   flutter_speed_dial: ^1.2.5
   some_calendar:
     path: ../
+  intl: ^0.16.0
 
 dev_dependencies:
   flutter_test:

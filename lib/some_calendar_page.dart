@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:some_calendar/some_calendar.dart';
-import 'package:some_calendar/some_week_label_en.dart';
+import 'package:some_calendar/some_week_label.dart';
 
 class SomeCalendarPage extends StatefulWidget {
   final DateTime startDate;
@@ -68,7 +68,7 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
       selectedDate = state.selectedDate;
     }
     List<Widget> rows = [];
-    rows.add(SomeWeekLabelEN(textColor: textColor,));
+    rows.add(SomeWeekLabel(textColor: textColor));
 
     var dateTime = Jiffy(startDate);
     for (int i = 1; i < 7; i++) {
