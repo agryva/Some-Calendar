@@ -6,6 +6,10 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:some_calendar/some_calendar.dart';
 
+import 'main_multi_without_dialog.dart';
+import 'main_range_without_dialog.dart';
+import 'main_single_without_dialog.dart';
+
 // import 'main_multi_without_dialog.dart';
 // import 'main_range_without_dialog.dart';
 
@@ -51,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     initializeDateFormatting();
-    Intl.systemLocale = 'pl_PL';
+    Intl.systemLocale = 'en_En';
     super.initState();
   }
 
@@ -89,8 +93,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                 primaryColor: Color(0xff5833A5),
                                 mode: SomeMode.Single,
                                 labels: new Labels(
-                                  dialogDone: 'Wybierz',
-                                  dialogCancel: 'Anuluj',
+                                  dialogDone: 'Selesai',
+                                  dialogCancel: 'Batal',
+                                  dialogRangeFirstDate: 'Tanggal Pertama',
+                                  dialogRangeLastDate: 'Tanggal Terakhir',
                                 ),
                                 isWithoutDialog: false,
                                 selectedDate: selectedDate,
@@ -166,41 +172,41 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(
                 height: 16,
               ),
-//              Row(
-//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                children: <Widget>[
-//                  RaisedButton(
-//                    child: Text("Single "),
-//                    onPressed: () {
-//                      Navigator.push(
-//                        context,
-//                        MaterialPageRoute(
-//                            builder: (context) => MainSingleWithoutDialog()),
-//                      );
-//                    },
-//                  ),
-//                  RaisedButton(
-//                    child: Text("Multi "),
-//                    onPressed: () {
-//                      Navigator.push(
-//                        context,
-//                        MaterialPageRoute(
-//                            builder: (context) => MainMultiWithoutDialog()),
-//                      );
-//                    },
-//                  ),
-//                  RaisedButton(
-//                    child: Text("Range"),
-//                    onPressed: () {
-//                      Navigator.push(
-//                        context,
-//                        MaterialPageRoute(
-//                            builder: (context) => MainRangeWithoutDialog()),
-//                      );
-//                    },
-//                  ),
-//                ],
-//              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("Single "),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainSingleWithoutDialog()),
+                      );
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text("Multi "),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainMultiWithoutDialog()),
+                      );
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text("Range"),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainRangeWithoutDialog()),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ],
           ),
         ),
