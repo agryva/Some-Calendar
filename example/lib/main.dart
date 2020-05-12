@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     initializeDateFormatting();
-    Intl.systemLocale = 'en_En';
+    Intl.systemLocale = 'en_En'; // to change the calendar format based on localization
     super.initState();
   }
 
