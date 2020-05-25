@@ -6,9 +6,11 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:some_calendar/some_calendar.dart';
 
-import 'main_multi_without_dialog.dart';
-import 'main_range_without_dialog.dart';
-import 'main_single_without_dialog.dart';
+import 'MainMultiWithoutDialog.dart';
+
+//import 'main_multi_without_dialog.dart';
+//import 'main_range_without_dialog.dart';
+//import 'main_single_without_dialog.dart';
 
 // import 'main_multi_without_dialog.dart';
 // import 'main_range_without_dialog.dart';
@@ -181,8 +183,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MainSingleWithoutDialog()),
-                      );
+//                            builder: (context) => MainSingleWithoutDialog()), not compiled!
+                      ));
                     },
                   ),
                   RaisedButton(
@@ -201,8 +203,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MainRangeWithoutDialog()),
-                      );
+//                            builder: (context) => MainRangeWithoutDialog()), not compiled!
+                      ));
                     },
                   ),
                 ],

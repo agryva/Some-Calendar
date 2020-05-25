@@ -8,6 +8,7 @@ import 'package:some_calendar/some_utils.dart';
 
 typedef void OnTapFunction(DateTime date);
 typedef void OnDoneFunction(date);
+typedef void OnPageChanged(date);
 
 enum SomeMode { Range, Single, Multi }
 
@@ -26,6 +27,7 @@ class Labels {
 class SomeCalendar extends StatefulWidget {
   final SomeMode mode;
   final OnDoneFunction done;
+  final OnPageChanged onPageChanged;
 
   DateTime startDate;
   DateTime lastDate;
@@ -48,7 +50,8 @@ class SomeCalendar extends StatefulWidget {
     this.textColor,
     this.isWithoutDialog,
     this.labels,
-    this.scrollDirection}) {
+    this.scrollDirection,
+    this.onPageChanged}) {
     DateTime now = Jiffy().dateTime;
     assert(mode != null);
     if (startDate == null) startDate = SomeUtils.getStartDateDefault();
@@ -72,7 +75,8 @@ class SomeCalendar extends StatefulWidget {
           primaryColor: primaryColor,
           isWithoutDialog: isWithoutDialog,
           labels: labels,
-          scrollDirection: scrollDirection);
+          scrollDirection: scrollDirection,
+          onPageChanged: onPageChanged);
 
   static SomeCalendarState of(BuildContext context) =>
       context.findAncestorStateOfType();
@@ -80,6 +84,7 @@ class SomeCalendar extends StatefulWidget {
 
 class SomeCalendarState extends State<SomeCalendar> {
   final OnDoneFunction done;
+  final OnPageChanged onPageChanged;
 
   DateTime startDate;
   DateTime lastDate;
@@ -124,7 +129,8 @@ class SomeCalendarState extends State<SomeCalendar> {
     this.textColor,
     this.isWithoutDialog,
     this.labels,
-    this.scrollDirection}) {
+    this.scrollDirection,
+    this.onPageChanged}) {
     now = Jiffy().dateTime;
 
     if (scrollDirection == null) scrollDirection = Axis.vertical;
@@ -222,6 +228,7 @@ class SomeCalendarState extends State<SomeCalendar> {
       itemCount: pagesCount,
       onPageChanged: (index) {
         SomeDateRange someDateRange = getDateRange(index);
+        onPageChanged?.call(someDateRange.startDate);
         setState(() {
           if (mode == SomeMode.Multi) {
             monthFirstDate = Jiffy(someDateRange.startDate).format("MMM");
