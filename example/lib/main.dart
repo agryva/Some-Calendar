@@ -6,9 +6,9 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:some_calendar/some_calendar.dart';
 
-import 'main_multi_without_dialog.dart';
-import 'main_range_without_dialog.dart';
-import 'main_single_without_dialog.dart';
+//import 'main_multi_without_dialog.dart';
+//import 'main_range_without_dialog.dart';
+//import 'main_single_without_dialog.dart';
 
 // import 'main_multi_without_dialog.dart';
 // import 'main_range_without_dialog.dart';
@@ -116,7 +116,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       showDialog(
                           context: context,
-                          builder: (_) => SomeCalendar(
+                          builder: (_) =>
+                              SomeCalendar(
                                 mode: SomeMode.Multi,
                                 startDate: Jiffy().subtract(years: 3),
                                 lastDate: Jiffy().add(months: 9),
@@ -127,6 +128,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                     selectedDates = date;
                                     showSnackbar(selectedDates.toString());
                                   });
+                                },
+                                onDateSelected: (date) {
+                                  showSnackbar(date.toString());
                                 },
                               ));
                     },
@@ -181,8 +185,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MainSingleWithoutDialog()),
-                      );
+//                            builder: (context) => MainSingleWithoutDialog()), not compiled!
+                      ));
                     },
                   ),
                   RaisedButton(
@@ -191,8 +195,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MainMultiWithoutDialog()),
-                      );
+//                            builder: (context) => MainMultiWithoutDialog()), not compiled!
+                      ));
                     },
                   ),
                   RaisedButton(
@@ -201,8 +205,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MainRangeWithoutDialog()),
-                      );
+//                            builder: (context) => MainRangeWithoutDialog()), not compiled!
+                      ));
                     },
                   ),
                 ],
@@ -217,6 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void showSnackbar(String x) {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text(x),
+      duration: Duration(seconds: 1),
     ));
   }
 }

@@ -8,6 +8,7 @@ import 'package:some_calendar/some_utils.dart';
 
 typedef void OnTapFunction(DateTime date);
 typedef void OnDoneFunction(date);
+typedef void OnDateSelectedFunction(date);
 
 enum SomeMode { Range, Single, Multi }
 
@@ -26,6 +27,7 @@ class Labels {
 class SomeCalendar extends StatefulWidget {
   final SomeMode mode;
   final OnDoneFunction done;
+  final OnDateSelectedFunction onDateSelected;
 
   DateTime startDate;
   DateTime lastDate;
@@ -42,6 +44,7 @@ class SomeCalendar extends StatefulWidget {
     this.startDate,
     this.lastDate,
     this.done,
+    this.onDateSelected,
     this.selectedDate,
     this.selectedDates,
     this.primaryColor,
@@ -66,6 +69,7 @@ class SomeCalendar extends StatefulWidget {
           startDate: startDate,
           mode: mode,
           done: done,
+          onDateSelected: onDateSelected,
           textColor: textColor,
           selectedDates: selectedDates,
           selectedDate: selectedDate,
@@ -80,6 +84,7 @@ class SomeCalendar extends StatefulWidget {
 
 class SomeCalendarState extends State<SomeCalendar> {
   final OnDoneFunction done;
+  final OnDateSelectedFunction onDateSelected;
 
   DateTime startDate;
   DateTime lastDate;
@@ -115,6 +120,7 @@ class SomeCalendarState extends State<SomeCalendar> {
   Labels labels;
 
   SomeCalendarState({@required this.done,
+    this.onDateSelected,
     this.startDate,
     this.lastDate,
     this.selectedDate,
@@ -274,6 +280,7 @@ class SomeCalendarState extends State<SomeCalendar> {
   }
 
   void onCallback(DateTime a) {
+    onDateSelected?.call(a);
     if (mode == SomeMode.Multi) {
       if (selectedDates.contains(a))
         selectedDates.remove(a);
