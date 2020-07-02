@@ -6,7 +6,18 @@
 Custom calendar dialog widget for flutter with (multi select, single select, date range) mode
 
 ## New Features
++ Fixed issue #12
++ Fixed Issue #11
++ and add Key variable in constructor #10
++ Thank you for the support of all of you :)
 + you can change weeks label format based on localization thank you :tada:. [digit81] (https://github.com/digit81)
+
+
+## Help Maintenance
+I've taken the time to make this library, help support to develop it or buy me coffee and snacks to be even more enthusiastic
+<br/>
+<a href="https://www.buymeacoffee.com/agryva" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+[![Paypal](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png)](https://paypal.me/agryva)
 
 ## <a name="#gif"></a>Gif Somecalendar (without Dialog)
 
@@ -194,9 +205,3 @@ Range Mode, add to your code:
 | lastDate| `Date`     | |
 | mode| `SomeMode`     |  |
 
-
-## Help Maintenance
-I've taken the time to make this library, help support to develop it or buy me coffee and snacks to be even more enthusiastic
-<br/>
-<a href="https://www.buymeacoffee.com/agryva" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
-[![Paypal](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png)](https://paypal.me/agryva)

@@ -1,6 +1,6 @@
 name: some_calendar
 description: Custom calendar (multi select, single select, date range) for Flutter
-version: 1.2.3
+version: 1.2.4
 authors:
   - Irvan Lutfi Gunawan <irvan.devv17@gmail.com>
 homepage: https://github.com/agryva/Some-Calendar.git

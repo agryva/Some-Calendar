@@ -1,3 +1,9 @@
+## [1.2.4] -  02 July 2020.
+   * Fixed issue #12
+   * Fixed Issue #11
+   * and add Key variable in constructor #10
+   * Thank you for the support of all of you :)
+
 ## [1.2.3] -  12 May 2020.
    * Fix bug
    * Can change weeks label format based on localization
