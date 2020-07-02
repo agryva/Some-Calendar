@@ -55,7 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     initializeDateFormatting();
-    Intl.systemLocale = 'en_En'; // to change the calendar format based on localization
+    Intl.systemLocale =
+        'en_En'; // to change the calendar format based on localization
     super.initState();
   }
 
@@ -100,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 isWithoutDialog: false,
                                 selectedDate: selectedDate,
-                                startDate: Jiffy().subtract(years: 3),
+                                startDate: new DateTime(2020, 6, 28),
                                 lastDate: Jiffy().add(months: 9),
                                 done: (date) {
                                   setState(() {
@@ -122,6 +123,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                 lastDate: Jiffy().add(months: 9),
                                 isWithoutDialog: false,
                                 selectedDates: selectedDates,
+                                labels: new Labels(
+                                  dialogDone: 'Selesai',
+                                  dialogCancel: 'Batal',
+                                  dialogRangeFirstDate: 'Tanggal Pertama',
+                                  dialogRangeLastDate: 'Tanggal Terakhir',
+                                ),
                                 done: (date) {
                                   setState(() {
                                     selectedDates = date;
@@ -139,10 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (_) => SomeCalendar(
                                 mode: SomeMode.Range,
                                 labels: new Labels(
-                                  dialogRangeFirstDate: 'Od:',
-                                  dialogRangeLastDate: 'Do:',
-                                  dialogDone: 'Wybierz',
-                                  dialogCancel: 'Anuluj',
+                                  dialogDone: 'Selesai',
+                                  dialogCancel: 'Batal',
+                                  dialogRangeFirstDate: 'Tanggal Pertama',
+                                  dialogRangeLastDate: 'Tanggal Terakhir',
                                 ),
                                 primaryColor: Color(0xff5833A5),
                                 startDate: Jiffy().subtract(years: 3),

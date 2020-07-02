@@ -38,7 +38,9 @@ class SomeCalendar extends StatefulWidget {
 
   final Labels labels;
 
-  SomeCalendar({@required this.mode,
+  SomeCalendar({
+    Key key,
+    @required this.mode,
     this.startDate,
     this.lastDate,
     this.done,
@@ -150,15 +152,13 @@ class SomeCalendarState extends State<SomeCalendar> {
       if (selectedDates == null) {
         firstRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
         endRangeDate =
-            Jiffy(DateTime(now.year, now.month, now.day)).add(days: 4);
+            Jiffy(DateTime(now.year, now.month, now.day)).add(days: 2);
       } else {
         DateTime dateRange = now;
         if (selectedDates.length > 0) {
           dateRange = selectedDates[0];
         }
-        if (dateRange
-            .difference(startDate)
-            .inDays >= 0) {
+        if (dateRange.difference(startDate).inDays >= 0) {
           if (selectedDates.length > 0) {
             firstRangeDate = Jiffy(selectedDates[0]).dateTime;
             endRangeDate =
@@ -167,13 +167,13 @@ class SomeCalendarState extends State<SomeCalendar> {
             firstRangeDate =
                 Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
             endRangeDate =
-                Jiffy(DateTime(now.year, now.month, now.day)).add(days: 4);
+                Jiffy(DateTime(now.year, now.month, now.day)).add(days: 2);
           }
         } else {
           firstRangeDate =
               Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
           endRangeDate =
-              Jiffy(DateTime(now.year, now.month, now.day)).add(days: 4);
+              Jiffy(DateTime(now.year, now.month, now.day)).add(days: 2);
         }
       }
 

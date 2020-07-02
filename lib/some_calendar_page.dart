@@ -78,8 +78,10 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
         ));
         dateTime = dateTime..add(days: startDayOffset);
       } else {
+
         rows.add(Row(
             children: buildSomeCalendarDay(dateTime.dateTime, lastDate, i)));
+        dateTime = dateTime..add(days: startDayOffset);
       }
     }
 
