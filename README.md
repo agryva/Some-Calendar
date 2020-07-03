@@ -19,12 +19,6 @@ I've taken the time to make this library, help support to develop it or buy me c
 <a href="https://www.buymeacoffee.com/agryva" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 [![Paypal](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png)](https://paypal.me/agryva)
 
-## <a name="#gif"></a>Gif Somecalendar (without Dialog)
-
-| <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi_without.gif" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range_without.gif" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single_without.gif" width="379px;"/><br /><sub><b>Single</b></sub> |
-| :---: | :---: | :---: |
-
-
 ## <a name="#gifDialog"></a>Gif Somecalendar (Dialog)
 
 | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/multi.gif" width="379px;"/><br /><sub><b>Multi</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/range.gif" width="379px;"/><br /><sub><b>Range</b></sub> | <img src="https://raw.githubusercontent.com/agryva/Some-Calendar/master/screen/single.gif" width="379px;"/><br /><sub><b>Single</b></sub> |
@@ -61,71 +55,6 @@ import 'package:intl/date_symbol_data_local.dart';
 
 ```
 
-### Without dialog
-Single Mode, add to your code:
-```dart
-    Padding(
-        padding: EdgeInsets.all(18),
-        child: SomeCalendar(
-            primaryColor: Color(0xff5833A5),
-            mode: SomeMode.Single,
-            scrollDirection: Axis.horizontal,
-            isWithoutDialog: true,
-            selectedDate: selectedDate,
-            startDate: Jiffy().subtract(years: 3),
-            lastDate: Jiffy().add(months: 9),
-            done: (date) {
-                setState(() {
-                    selectedDate = date;
-                    showSnackbar(selectedDate.toString());
-                });
-            },
-        ),
-    )
-```
-
-Multi Mode, add to your code:
-```dart
-    Padding(
-        padding: EdgeInsets.all(18),
-        child: SomeCalendar(
-            primaryColor: Color(0xff5833A5),
-            mode: SomeMode.Multi,
-            isWithoutDialog: true,
-            selectedDates: selectedDates,
-            startDate: Jiffy().subtract(years: 3),
-            lastDate: Jiffy().add(months: 9),
-            done: (date) {
-                setState(() {
-                    selectedDates = date;
-                    showSnackbar(selectedDates.toString());
-                });
-            },
-        ),
-    )
-```
-
-Range Mode, add to your code:
-```dart
-    Padding(
-        padding: EdgeInsets.all(18),
-        child: SomeCalendar(
-            primaryColor: Color(0xff5833A5),
-            mode: SomeMode.Range,
-            isWithoutDialog: true,
-            selectedDates: selectedDates,
-            startDate: Jiffy().subtract(years: 3),
-            lastDate: Jiffy().add(months: 9),
-            done: (date) {
-                setState(() {
-                    selectedDates = date;
-                    showSnackbar(selectedDates.toString());
-                });
-            },
-        ),
-    )
-```
-
 ### with dialog
 Single Mode, add to your code:
 ```dart
@@ -135,6 +64,12 @@ Single Mode, add to your code:
           mode: SomeMode.Single,
           isWithoutDialog: false,
           selectedDate: selectedDate,
+          labels: new Labels(
+              dialogDone: 'Selesai',
+              dialogCancel: 'Batal',
+              dialogRangeFirstDate: 'Tanggal Pertama',
+              dialogRangeLastDate: 'Tanggal Terakhir',
+          ),
           startDate: Jiffy().subtract(years: 3),
           lastDate: Jiffy().add(months: 9),
           done: (date) {

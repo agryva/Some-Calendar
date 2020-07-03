@@ -1,4 +1,4 @@
-## [1.2.4] -  02 July 2020.
+## [1.2.5] -  02 July 2020.
    * Fixed issue #12
    * Fixed Issue #11
    * and add Key variable in constructor #10
