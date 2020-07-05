@@ -1,9 +1,12 @@
 # some calendar
+<a href="https://github.com/Solido/awesome-flutter">
+   <img alt="Awesome Flutter" src="https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square" />
+</a>
 [![pub package](https://img.shields.io/pub/v/some_calendar.svg)](https://pub.dev/packages/some_calendar#-readme-tab-)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 [![support](https://img.shields.io/badge/platform-flutter%7Cflutter%20web-ff69b4.svg?style=flat-square)](https://github.com/agryva/Some-Calendar)
 
-Custom calendar dialog widget for flutter with (multi select, single select, date range) mode
+Custom calendar with Multi-select & range configurable calendar
 
 ## New Features
 + Fixed issue #12
