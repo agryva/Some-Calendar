@@ -9,6 +9,7 @@ class SomeCalendarPage extends StatefulWidget {
   final OnTapFunction onTapFunction;
   final SomeCalendarState state;
   final SomeMode mode;
+  final ViewMode viewMode;
   final Color primaryColor;
   final Color textColor;
 
@@ -19,6 +20,7 @@ class SomeCalendarPage extends StatefulWidget {
       this.onTapFunction,
       this.state,
       this.mode,
+      this.viewMode,
       this.primaryColor,
       this.textColor});
 
@@ -29,6 +31,7 @@ class SomeCalendarPage extends StatefulWidget {
       onTapFunction: onTapFunction,
       state: state,
       mode: mode,
+      viewMode: viewMode,
       primaryColor: primaryColor,
       textColor: textColor);
 }
@@ -39,6 +42,7 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
   final OnTapFunction onTapFunction;
   final SomeCalendarState state;
   final SomeMode mode;
+  final ViewMode viewMode;
   final Color primaryColor;
   final Color textColor;
 
@@ -52,6 +56,7 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
       this.onTapFunction,
       this.state,
       this.mode,
+      this.viewMode,
       this.primaryColor,
       this.textColor});
 
@@ -78,7 +83,6 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
         ));
         dateTime = dateTime..add(days: startDayOffset);
       } else {
-
         rows.add(Row(
             children: buildSomeCalendarDay(dateTime.dateTime, lastDate, i)));
         dateTime = dateTime..add(days: startDayOffset);
@@ -134,11 +138,13 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
         child: Padding(
           padding: const EdgeInsets.all(1),
           child: InkWell(
-            onTap: () {
-              setState(() {
-                onTapFunction(currentDate);
-              });
-            },
+            onTap: viewMode == ViewMode.READ
+                ? null
+                : () {
+                    setState(() {
+                      onTapFunction(currentDate);
+                    });
+                  },
             child: Container(
                 child: Padding(
               padding: const EdgeInsets.all(6),

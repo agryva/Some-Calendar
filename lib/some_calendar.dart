@@ -10,6 +10,7 @@ typedef void OnTapFunction(DateTime date);
 typedef void OnDoneFunction(date);
 
 enum SomeMode { Range, Single, Multi }
+enum ViewMode { READ, EDIT }
 
 class Labels {
   final String dialogDone, dialogCancel, dialogRangeFirstDate, dialogRangeLastDate;
@@ -21,7 +22,6 @@ class Labels {
     this.dialogRangeLastDate = 'Last Date',
   });
 }
-
 
 class SomeCalendar extends StatefulWidget {
   final SomeMode mode;
@@ -35,22 +35,24 @@ class SomeCalendar extends StatefulWidget {
   final Color primaryColor;
   final Color textColor;
   final bool isWithoutDialog;
+  final ViewMode viewMode;
 
   final Labels labels;
 
-  SomeCalendar({
-    Key key,
-    @required this.mode,
-    this.startDate,
-    this.lastDate,
-    this.done,
-    this.selectedDate,
-    this.selectedDates,
-    this.primaryColor,
-    this.textColor,
-    this.isWithoutDialog,
-    this.labels,
-    this.scrollDirection}) {
+  SomeCalendar(
+      {Key key,
+      @required this.mode,
+      this.startDate,
+      this.lastDate,
+      this.done,
+      this.selectedDate,
+      this.selectedDates,
+      this.primaryColor,
+      this.textColor,
+      this.isWithoutDialog,
+      this.labels,
+      this.viewMode,
+      this.scrollDirection}) {
     DateTime now = Jiffy().dateTime;
     assert(mode != null);
     if (startDate == null) startDate = SomeUtils.getStartDateDefault();
@@ -62,19 +64,19 @@ class SomeCalendar extends StatefulWidget {
   }
 
   @override
-  SomeCalendarState createState() =>
-      SomeCalendarState(
-          lastDate: lastDate,
-          startDate: startDate,
-          mode: mode,
-          done: done,
-          textColor: textColor,
-          selectedDates: selectedDates,
-          selectedDate: selectedDate,
-          primaryColor: primaryColor,
-          isWithoutDialog: isWithoutDialog,
-          labels: labels,
-          scrollDirection: scrollDirection);
+  SomeCalendarState createState() => SomeCalendarState(
+      lastDate: lastDate,
+      startDate: startDate,
+      mode: mode,
+      done: done,
+      textColor: textColor,
+      selectedDates: selectedDates,
+      selectedDate: selectedDate,
+      primaryColor: primaryColor,
+      isWithoutDialog: isWithoutDialog,
+      labels: labels,
+      viewMode: viewMode,
+      scrollDirection: scrollDirection);
 
   static SomeCalendarState of(BuildContext context) =>
       context.findAncestorStateOfType();
@@ -113,24 +115,28 @@ class SomeCalendarState extends State<SomeCalendar> {
   Color textColor;
   bool isWithoutDialog;
   Axis scrollDirection;
+  ViewMode viewMode;
 
   Labels labels;
 
-  SomeCalendarState({@required this.done,
-    this.startDate,
-    this.lastDate,
-    this.selectedDate,
-    this.selectedDates,
-    this.mode,
-    this.primaryColor,
-    this.textColor,
-    this.isWithoutDialog,
-    this.labels,
-    this.scrollDirection}) {
+  SomeCalendarState(
+      {@required this.done,
+      this.startDate,
+      this.lastDate,
+      this.selectedDate,
+      this.selectedDates,
+      this.mode,
+      this.primaryColor,
+      this.textColor,
+      this.isWithoutDialog,
+      this.labels,
+      this.viewMode,
+      this.scrollDirection}) {
     now = Jiffy().dateTime;
 
     if (scrollDirection == null) scrollDirection = Axis.vertical;
     if (isWithoutDialog == null) isWithoutDialog = true;
+    if (viewMode == null) viewMode = ViewMode.EDIT;
     print(labels.toString());
     if (labels == null) labels = new Labels();
     if (mode == SomeMode.Multi || mode == SomeMode.Range) {
@@ -238,14 +244,15 @@ class SomeCalendarState extends State<SomeCalendar> {
         SomeDateRange someDateRange = getDateRange(index);
         return Container(
             child: SomeCalendarPage(
-              startDate: someDateRange.startDate,
-              lastDate: someDateRange.endDate,
-              onTapFunction: onCallback,
-              state: SomeCalendar.of(context),
-              mode: mode,
-              primaryColor: primaryColor,
-              textColor: textColor,
-            ));
+          startDate: someDateRange.startDate,
+          lastDate: someDateRange.endDate,
+          onTapFunction: onCallback,
+          state: SomeCalendar.of(context),
+          mode: mode,
+          viewMode: viewMode,
+          primaryColor: primaryColor,
+          textColor: textColor,
+        ));
       },
     );
 
