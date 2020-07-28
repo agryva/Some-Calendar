@@ -1,3 +1,7 @@
+## [1.2.6] -  28 July 2020.
+   * Added View Mode Somecalendar #15
+   * Thank you for the support of all of you :)
+   
 ## [1.2.5] -  02 July 2020.
    * Fixed issue #12
    * Fixed Issue #11

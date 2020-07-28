@@ -10,11 +10,7 @@
 Custom calendar with Multi-select & range configurable calendar
 
 ## New Features
-+ Fixed issue #12
-+ Fixed Issue #11
-+ and add Key variable in constructor #10
-+ Thank you for the support of all of you :)
-+ you can change weeks label format based on localization thank you :tada:. [digit81] (https://github.com/digit81)
++ Added View Mode Somecalendar #15
 
 
 ## Help Maintenance
@@ -95,6 +91,7 @@ Multi Mode, add to your code:
           lastDate: Jiffy().add(months: 9),
           isWithoutDialog: false,
           selectedDates: selectedDates,
+          viewMode: ViewMode.Edit,
           done: (date) {
             setState(() {
               selectedDates = date;
@@ -114,6 +111,7 @@ Range Mode, add to your code:
           lastDate: Jiffy().add(months: 9),
           selectedDates: selectedDates,
           isWithoutDialog: false,
+          viewMode: ViewMode.Edit,
           primaryColor: Colors.red,
           done: (date) {
             setState(() {
@@ -143,4 +141,5 @@ Range Mode, add to your code:
 | startDate| `Date`     | |
 | lastDate| `Date`     | |
 | mode| `SomeMode`     |  |
+| viewMode| `ViewMode`     | ViewMode.Edit |
 
