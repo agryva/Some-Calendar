@@ -119,16 +119,17 @@ class _MyHomePageState extends State<MyHomePage> {
                           context: context,
                           builder: (_) => SomeCalendar(
                                 mode: SomeMode.Multi,
-                                startDate: Jiffy().subtract(years: 3),
-                                lastDate: Jiffy().add(months: 9),
+                                startDate: DateTime.now(),
+                                lastDate: Jiffy().add(days: 7),
                                 isWithoutDialog: false,
                                 selectedDates: selectedDates,
-                                labels: new Labels(
+                                maxDatesToSelect: 1,
+                                /*  labels: new Labels(
                                   dialogDone: 'Selesai',
                                   dialogCancel: 'Batal',
                                   dialogRangeFirstDate: 'Tanggal Pertama',
                                   dialogRangeLastDate: 'Tanggal Terakhir',
-                                ),
+                                ), */
                                 done: (date) {
                                   setState(() {
                                     selectedDates = date;

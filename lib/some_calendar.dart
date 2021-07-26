@@ -13,7 +13,10 @@ enum SomeMode { Range, Single, Multi }
 enum ViewMode { READ, EDIT }
 
 class Labels {
-  final String dialogDone, dialogCancel, dialogRangeFirstDate, dialogRangeLastDate;
+  final String dialogDone,
+      dialogCancel,
+      dialogRangeFirstDate,
+      dialogRangeLastDate;
 
   Labels({
     this.dialogDone = 'Done',
@@ -38,26 +41,29 @@ class SomeCalendar extends StatefulWidget {
   final ViewMode viewMode;
 
   final Labels labels;
+  final int maxDatesToSelect;
 
-  SomeCalendar(
-      {Key key,
-      @required this.mode,
-      this.startDate,
-      this.lastDate,
-      this.done,
-      this.selectedDate,
-      this.selectedDates,
-      this.primaryColor,
-      this.textColor,
-      this.isWithoutDialog,
-      this.labels,
-      this.viewMode,
-      this.scrollDirection}) {
+  SomeCalendar({
+    Key key,
+    @required this.mode,
+    this.startDate,
+    this.lastDate,
+    this.done,
+    this.selectedDate,
+    this.selectedDates,
+    this.primaryColor,
+    this.textColor,
+    this.isWithoutDialog,
+    this.labels,
+    this.viewMode,
+    this.scrollDirection,
+    this.maxDatesToSelect,
+  }) {
     DateTime now = Jiffy().dateTime;
     assert(mode != null);
     if (startDate == null) startDate = SomeUtils.getStartDateDefault();
     if (lastDate == null) lastDate = SomeUtils.getLastDateDefault();
-    if (selectedDates == null) selectedDates = List();
+    if (selectedDates == null) selectedDates = [];
     if (selectedDate == null) {
       selectedDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
     }
@@ -65,18 +71,20 @@ class SomeCalendar extends StatefulWidget {
 
   @override
   SomeCalendarState createState() => SomeCalendarState(
-      lastDate: lastDate,
-      startDate: startDate,
-      mode: mode,
-      done: done,
-      textColor: textColor,
-      selectedDates: selectedDates,
-      selectedDate: selectedDate,
-      primaryColor: primaryColor,
-      isWithoutDialog: isWithoutDialog,
-      labels: labels,
-      viewMode: viewMode,
-      scrollDirection: scrollDirection);
+        lastDate: lastDate,
+        startDate: startDate,
+        mode: mode,
+        done: done,
+        textColor: textColor,
+        selectedDates: selectedDates,
+        selectedDate: selectedDate,
+        primaryColor: primaryColor,
+        isWithoutDialog: isWithoutDialog,
+        labels: labels,
+        viewMode: viewMode,
+        scrollDirection: scrollDirection,
+        maxDatesToSelect: maxDatesToSelect,
+      );
 
   static SomeCalendarState of(BuildContext context) =>
       context.findAncestorStateOfType();
@@ -91,7 +99,7 @@ class SomeCalendarState extends State<SomeCalendar> {
 
   PageView pageView;
   PageController controller;
-
+  int maxDatesToSelect;
   int pagesCount;
   String month;
   String year;
@@ -131,7 +139,8 @@ class SomeCalendarState extends State<SomeCalendar> {
       this.isWithoutDialog,
       this.labels,
       this.viewMode,
-      this.scrollDirection}) {
+      this.scrollDirection,
+      this.maxDatesToSelect}) {
     now = Jiffy().dateTime;
 
     if (scrollDirection == null) scrollDirection = Axis.vertical;
@@ -195,8 +204,8 @@ class SomeCalendarState extends State<SomeCalendar> {
         generateListDateRange();
       else {
         var diff = selectedDates[selectedDates.length - 1]
-            .difference(selectedDates[0])
-            .inDays +
+                .difference(selectedDates[0])
+                .inDays +
             1;
         var date = selectedDates[0];
         selectedDates.clear();
@@ -271,9 +280,7 @@ class SomeCalendarState extends State<SomeCalendar> {
     if (selectedDate == null) {
       return SomeUtils.getDiffMonth(startDate, Jiffy().dateTime);
     } else {
-      if (selectedDate
-          .difference(startDate)
-          .inDays >= 0)
+      if (selectedDate.difference(startDate).inDays >= 0)
         return SomeUtils.getDiffMonth(startDate, selectedDate);
       else
         return SomeUtils.getDiffMonth(startDate, Jiffy().dateTime);
@@ -284,8 +291,14 @@ class SomeCalendarState extends State<SomeCalendar> {
     if (mode == SomeMode.Multi) {
       if (selectedDates.contains(a))
         selectedDates.remove(a);
-      else
+      else {
+        if (selectedDates.length < maxDatesToSelect) {
+          selectedDates.add(a);
+        }
+        selectedDates.removeLast();
         selectedDates.add(a);
+      }
+
       selectedDates.sort((a, b) {
         return a.compareTo(b);
       });
@@ -336,9 +349,7 @@ class SomeCalendarState extends State<SomeCalendar> {
   }
 
   void generateListDateRange() {
-    var diff = endRangeDate
-        .difference(firstRangeDate)
-        .inDays + 1;
+    var diff = endRangeDate.difference(firstRangeDate).inDays + 1;
     var date = firstRangeDate;
     for (int i = 0; i < diff; i++) {
       selectedDates.add(date);
@@ -367,8 +378,8 @@ class SomeCalendarState extends State<SomeCalendar> {
       pageEndDate = Jiffy(lastDate).subtract(days: 1);
     } else {
       var firstDateOfCurrentMonth =
-      Jiffy(DateTime(startDate.year, startDate.month))
-        ..add(months: position);
+          Jiffy(DateTime(startDate.year, startDate.month))
+            ..add(months: position);
       pageStartDate = firstDateOfCurrentMonth.dateTime;
       var a = firstDateOfCurrentMonth
         ..add(months: 1)
@@ -382,10 +393,7 @@ class SomeCalendarState extends State<SomeCalendar> {
     var heightContainer = mode == SomeMode.Range ? 55 * 6 : 55 * 6;
     return Container(
       height: heightContainer.toDouble(),
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+      width: MediaQuery.of(context).size.width,
       child: Column(
         children: <Widget>[
           Text(
@@ -496,55 +504,53 @@ class SomeCalendarState extends State<SomeCalendar> {
                       ),
                     ),
                   ),
-                ] else
-                  if (mode == SomeMode.Single) ...[
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Selected Date",
-                            style: TextStyle(
-                                fontFamily: "playfair-regular",
-                                fontSize: 12,
-                                color: textColor),
-                          ),
-                          Text(
-                            "$dateFirstDate $monthFirstDate, $yearFirstDate",
-                            style: TextStyle(
-                                fontFamily: "playfair-regular",
-                                color: textColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ] else
-                    ...[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Selected Date",
-                              style: TextStyle(
-                                  fontFamily: "playfair-regular",
-                                  fontSize: 12,
-                                  color: textColor),
-                            ),
-                            Text(
-                              "$monthFirstDate, $yearFirstDate",
-                              style: TextStyle(
-                                  fontFamily: "playfair-regular",
-                                  color: textColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ],
+                ] else if (mode == SomeMode.Single) ...[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Selected Date",
+                          style: TextStyle(
+                              fontFamily: "playfair-regular",
+                              fontSize: 12,
+                              color: textColor),
                         ),
-                      ),
-                    ]
+                        Text(
+                          "$dateFirstDate $monthFirstDate, $yearFirstDate",
+                          style: TextStyle(
+                              fontFamily: "playfair-regular",
+                              color: textColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ),
+                ] else ...[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Selected Date",
+                          style: TextStyle(
+                              fontFamily: "playfair-regular",
+                              fontSize: 12,
+                              color: textColor),
+                        ),
+                        Text(
+                          "$monthFirstDate, $yearFirstDate",
+                          style: TextStyle(
+                              fontFamily: "playfair-regular",
+                              color: textColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ),
+                ]
               ],
             ),
           ),
@@ -563,10 +569,7 @@ class SomeCalendarState extends State<SomeCalendar> {
       contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 10),
       content: Container(
         height: heightContainer.toDouble(),
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         child: Column(
           children: <Widget>[
             if (mode != SomeMode.Multi) ...[
