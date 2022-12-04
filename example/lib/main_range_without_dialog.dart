@@ -49,8 +49,6 @@ class _MainRangeWithoutDialogState extends State<MainRangeWithoutDialog> {
   }
 
   void showSnackbar(String x) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text(x),
-    ));
+    Scaffold.of(context).showBottomSheet((_)=>Text(x));
   }
 }
