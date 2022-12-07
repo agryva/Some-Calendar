@@ -157,8 +157,8 @@ class SomeCalendarState extends State<SomeCalendar> {
     if (mode == SomeMode.Range) {
       if (selectedDates == null) {
         firstRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-        endRangeDate =
-            Jiffy(DateTime(now.year, now.month, now.day)).add(days: 2);
+        endRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
+        endRangeDate.add(Duration(days: 2));
       } else {
         DateTime dateRange = now;
         if (selectedDates.length > 0) {
@@ -172,14 +172,14 @@ class SomeCalendarState extends State<SomeCalendar> {
           } else {
             firstRangeDate =
                 Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-            endRangeDate =
-                Jiffy(DateTime(now.year, now.month, now.day)).add(days: 2);
+            endRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
+            endRangeDate.add(Duration(days: 2));
           }
         } else {
           firstRangeDate =
               Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-          endRangeDate =
-              Jiffy(DateTime(now.year, now.month, now.day)).add(days: 2);
+          endRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
+          endRangeDate.add(Duration(days: 2));
         }
       }
 
@@ -202,7 +202,8 @@ class SomeCalendarState extends State<SomeCalendar> {
         selectedDates.clear();
         for (int i = 0; i < diff; i++) {
           selectedDates.add(date);
-          date = Jiffy(date).add(days: 1);
+          date = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
+          endRangeDate.add(Duration(days: 1));
         }
       }
     } else {
@@ -342,7 +343,7 @@ class SomeCalendarState extends State<SomeCalendar> {
     var date = firstRangeDate;
     for (int i = 0; i < diff; i++) {
       selectedDates.add(date);
-      date = Jiffy(date).add(days: 1);
+      date = date.add(Duration(days: 1));
     }
   }
 
@@ -364,7 +365,8 @@ class SomeCalendarState extends State<SomeCalendar> {
       var start = Jiffy(DateTime(lastDate.year, lastDate.month))
         ..subtract(months: 1);
       pageStartDate = start.dateTime;
-      pageEndDate = Jiffy(lastDate).subtract(days: 1);
+      pageEndDate = Jiffy(lastDate).dateTime;
+      pageEndDate = pageEndDate.subtract(Duration(days: 1));
     } else {
       var firstDateOfCurrentMonth =
       Jiffy(DateTime(startDate.year, startDate.month))
@@ -595,11 +597,15 @@ class SomeCalendarState extends State<SomeCalendar> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: RaisedButton(
-                    elevation: 0,
-                    color: primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(18)),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(0),
+                      backgroundColor: MaterialStateProperty.all(primaryColor),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        )
+                      ),
                     ),
                     onPressed: () {
                       if (mode == SomeMode.Multi || mode == SomeMode.Range) {
@@ -621,11 +627,15 @@ class SomeCalendarState extends State<SomeCalendar> {
                     ),
                   ),
                 ),
-                RaisedButton(
-                  elevation: 0,
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(0),
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        )
+                    ),
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
