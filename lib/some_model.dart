@@ -1,5 +1,5 @@
 class SomeModel {
-  bool result = false;
+  bool? result = false;
 
   SomeModel({this.result});
 }

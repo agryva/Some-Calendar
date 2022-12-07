@@ -4,19 +4,19 @@ import 'package:some_calendar/some_calendar.dart';
 import 'package:some_calendar/some_week_label.dart';
 
 class SomeCalendarPage extends StatefulWidget {
-  final DateTime startDate;
-  final DateTime lastDate;
-  final OnTapFunction onTapFunction;
-  final SomeCalendarState state;
-  final SomeMode mode;
-  final ViewMode viewMode;
-  final Color primaryColor;
-  final Color textColor;
+  final DateTime? startDate;
+  final DateTime? lastDate;
+  final OnTapFunction? onTapFunction;
+  final SomeCalendarState? state;
+  final SomeMode? mode;
+  final ViewMode? viewMode;
+  final Color? primaryColor;
+  final Color? textColor;
 
   SomeCalendarPage(
-      {Key key,
-      @required this.startDate,
-      @required this.lastDate,
+      {Key? key,
+      required this.startDate,
+      required this.lastDate,
       this.onTapFunction,
       this.state,
       this.mode,
@@ -37,18 +37,18 @@ class SomeCalendarPage extends StatefulWidget {
 }
 
 class _SomeCalendarPageState extends State<SomeCalendarPage> {
-  final DateTime startDate;
-  final DateTime lastDate;
-  final OnTapFunction onTapFunction;
-  final SomeCalendarState state;
-  final SomeMode mode;
-  final ViewMode viewMode;
-  final Color primaryColor;
-  final Color textColor;
+  final DateTime? startDate;
+  final DateTime? lastDate;
+  final OnTapFunction? onTapFunction;
+  final SomeCalendarState? state;
+  final SomeMode? mode;
+  final ViewMode? viewMode;
+  final Color? primaryColor;
+  final Color? textColor;
 
   int startDayOffset = 0;
-  List<DateTime> selectedDates;
-  DateTime selectedDate;
+  List<DateTime?>? selectedDates;
+  DateTime? selectedDate;
 
   _SomeCalendarPageState(
       {this.startDate,
@@ -68,16 +68,16 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
   @override
   Widget build(BuildContext context) {
     if (mode == SomeMode.Multi || mode == SomeMode.Range) {
-      selectedDates = state.selectedDates;
+      selectedDates = state!.selectedDates;
     } else if (mode == SomeMode.Single) {
-      selectedDate = state.selectedDate;
+      selectedDate = state!.selectedDate;
     }
     List<Widget> rows = [];
     rows.add(SomeWeekLabel(textColor: textColor));
 
     var dateTime = Jiffy(startDate);
     for (int i = 1; i < 7; i++) {
-      if (lastDate.isAfter(dateTime.dateTime)) {
+      if (lastDate!.isAfter(dateTime.dateTime)) {
         rows.add(Row(
           children: buildSomeCalendarDay(dateTime.dateTime, lastDate, i),
         ));
@@ -93,7 +93,7 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
   }
 
   List<Widget> buildSomeCalendarDay(
-      DateTime rowStartDate, DateTime rowEndDate, int position) {
+      DateTime rowStartDate, DateTime? rowEndDate, int position) {
     List<Widget> items = [];
     DateTime currentDate = rowStartDate;
     rowEndDate = Jiffy(rowEndDate).dateTime;
@@ -143,7 +143,7 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
                 ? null
                 : () {
                     setState(() {
-                      onTapFunction(currentDate);
+                      onTapFunction!(currentDate);
                     });
                   },
             child: Container(
@@ -170,15 +170,15 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
     );
   }
 
-  Color getColor(currentDate) {
+  Color? getColor(currentDate) {
     if (mode == SomeMode.Multi || mode == SomeMode.Range) {
-      return selectedDates.contains(currentDate)
+      return selectedDates!.contains(currentDate)
           ? Colors.white
-          : (isWeekend(currentDate) ? textColor.withAlpha(222) : textColor);
+          : (isWeekend(currentDate) ? textColor!.withAlpha(222) : textColor);
     } else if (mode == SomeMode.Single) {
       return selectedDate == currentDate
           ? Colors.white
-          : (isWeekend(currentDate) ? textColor.withAlpha(222) : textColor);
+          : (isWeekend(currentDate) ? textColor!.withAlpha(222) : textColor);
     } else {
       return null;
     }
@@ -189,32 +189,31 @@ class _SomeCalendarPageState extends State<SomeCalendarPage> {
         currentDate.weekday == DateTime.saturday;
   }
 
-  Decoration getDecoration(currentDate) {
+  Decoration? getDecoration(currentDate) {
     var decoration = BoxDecoration(
       color: primaryColor,
       shape: BoxShape.circle,
     );
     if (mode == SomeMode.Multi) {
-      return selectedDates.contains(currentDate) ? decoration : null;
+      return selectedDates!.contains(currentDate) ? decoration : null;
     } else if (mode == SomeMode.Single) {
-      print(selectedDate);
       return selectedDate == currentDate ? decoration : null;
     } else {
-      if (selectedDates[0] == currentDate) {
+      if (selectedDates![0] == currentDate) {
         return BoxDecoration(
             color: primaryColor,
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(50), topLeft: Radius.circular(50)));
-      } else if (selectedDates[selectedDates.length - 1] == currentDate) {
+      } else if (selectedDates![selectedDates!.length - 1] == currentDate) {
         return BoxDecoration(
             color: primaryColor,
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(50),
                 topRight: Radius.circular(50)));
       } else {
-        if (selectedDates.contains(currentDate)) {
+        if (selectedDates!.contains(currentDate)) {
           return BoxDecoration(
-            color: primaryColor.withAlpha(180),
+            color: primaryColor!.withAlpha(180),
             shape: BoxShape.rectangle,
           );
         } else {

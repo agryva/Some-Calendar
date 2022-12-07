@@ -9,7 +9,7 @@ class MainSingleWithoutDialog extends StatefulWidget {
 
 class _MainSingleWithoutDialogState extends State<MainSingleWithoutDialog> {
   DateTime selectedDate = DateTime.now();
-  List<DateTime> selectedDates = List();
+  List<DateTime> selectedDates = [];
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -32,9 +32,9 @@ class _MainSingleWithoutDialogState extends State<MainSingleWithoutDialog> {
                   mode: SomeMode.Single,
                   isWithoutDialog: true,
                   selectedDate: selectedDate,
-                  startDate: Jiffy().subtract(years: 3),
+                  startDate: Jiffy().subtract(years: 3).dateTime,
                   scrollDirection: Axis.horizontal,
-                  lastDate: Jiffy().add(months: 9),
+                  lastDate: Jiffy().add(months: 9).dateTime,
                   done: (date) {
                     setState(() {
                       selectedDate = date;

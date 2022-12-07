@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SomeWeekLabelEN extends StatelessWidget {
-  final Color textColor;
+  final Color? textColor;
 
-  const SomeWeekLabelEN({Key key, this.textColor}) : super(key: key);
+  const SomeWeekLabelEN({Key? key, this.textColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

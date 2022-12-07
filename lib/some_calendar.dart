@@ -25,23 +25,23 @@ class Labels {
 
 class SomeCalendar extends StatefulWidget {
   final SomeMode mode;
-  final OnDoneFunction done;
+  final OnDoneFunction? done;
 
-  DateTime startDate;
-  DateTime lastDate;
-  DateTime selectedDate;
-  List<DateTime> selectedDates;
-  final Axis scrollDirection;
-  final Color primaryColor;
-  final Color textColor;
-  final bool isWithoutDialog;
-  final ViewMode viewMode;
+  DateTime? startDate;
+  DateTime? lastDate;
+  DateTime? selectedDate;
+  List<DateTime>? selectedDates;
+  final Axis? scrollDirection;
+  final Color? primaryColor;
+  final Color? textColor;
+  final bool? isWithoutDialog;
+  final ViewMode? viewMode;
 
-  final Labels labels;
+  final Labels? labels;
 
   SomeCalendar(
-      {Key key,
-      @required this.mode,
+      {Key? key,
+      required this.mode,
       this.startDate,
       this.lastDate,
       this.done,
@@ -57,7 +57,7 @@ class SomeCalendar extends StatefulWidget {
     assert(mode != null);
     if (startDate == null) startDate = SomeUtils.getStartDateDefault();
     if (lastDate == null) lastDate = SomeUtils.getLastDateDefault();
-    if (selectedDates == null) selectedDates = List();
+    if (selectedDates == null) selectedDates = [];
     if (selectedDate == null) {
       selectedDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
     }
@@ -78,49 +78,49 @@ class SomeCalendar extends StatefulWidget {
       viewMode: viewMode,
       scrollDirection: scrollDirection);
 
-  static SomeCalendarState of(BuildContext context) =>
+  static SomeCalendarState? of(BuildContext context) =>
       context.findAncestorStateOfType();
 }
 
 class SomeCalendarState extends State<SomeCalendar> {
-  final OnDoneFunction done;
+  final OnDoneFunction? done;
 
-  DateTime startDate;
-  DateTime lastDate;
-  SomeMode mode;
+  DateTime? startDate;
+  DateTime? lastDate;
+  SomeMode? mode;
 
-  PageView pageView;
-  PageController controller;
+  PageView? pageView;
+  PageController? controller;
 
-  int pagesCount;
-  String month;
-  String year;
+  int? pagesCount;
+  String? month;
+  String? year;
 
-  String monthFirstDate;
-  String yearFirstDate;
-  String dateFirstDate;
+  String? monthFirstDate;
+  String? yearFirstDate;
+  String? dateFirstDate;
 
-  String monthEndDate;
-  String yearEndDate;
-  String dateEndDate;
+  String? monthEndDate;
+  String? yearEndDate;
+  String? dateEndDate;
 
-  List<DateTime> selectedDates;
-  DateTime selectedDate;
-  DateTime firstRangeDate;
-  DateTime endRangeDate;
+  List<DateTime?>? selectedDates;
+  DateTime? selectedDate;
+  DateTime? firstRangeDate;
+  DateTime? endRangeDate;
 
-  DateTime now;
-  bool isSelectedModeFirstDateRange;
-  Color primaryColor;
-  Color textColor;
-  bool isWithoutDialog;
-  Axis scrollDirection;
-  ViewMode viewMode;
+  DateTime? now;
+  late bool isSelectedModeFirstDateRange;
+  Color? primaryColor;
+  Color? textColor;
+  bool? isWithoutDialog;
+  Axis? scrollDirection;
+  ViewMode? viewMode;
 
-  Labels labels;
+  Labels? labels;
 
   SomeCalendarState(
-      {@required this.done,
+      {required this.done,
       this.startDate,
       this.lastDate,
       this.selectedDate,
@@ -137,49 +137,48 @@ class SomeCalendarState extends State<SomeCalendar> {
     if (scrollDirection == null) scrollDirection = Axis.vertical;
     if (isWithoutDialog == null) isWithoutDialog = true;
     if (viewMode == null) viewMode = ViewMode.EDIT;
-    print(labels.toString());
     if (labels == null) labels = new Labels();
     if (mode == SomeMode.Multi || mode == SomeMode.Range) {
-      if (selectedDates.length > 0) {
-        List<DateTime> tempListDates = List();
-        for (var value in selectedDates) {
-          tempListDates.add(SomeUtils.setToMidnight(value));
+      if (selectedDates!.length > 0) {
+        List<DateTime> tempListDates = [];
+        for (var value in selectedDates!) {
+          tempListDates.add(SomeUtils.setToMidnight(value!));
         }
-        selectedDates.clear();
-        selectedDates.addAll(tempListDates);
+        selectedDates!.clear();
+        selectedDates!.addAll(tempListDates);
       }
     } else {
-      selectedDate = SomeUtils.setToMidnight(selectedDate);
+      selectedDate = SomeUtils.setToMidnight(selectedDate!);
     }
 
     if (textColor == null) textColor = Colors.black;
     if (primaryColor == null) primaryColor = Color(0xff365535);
     if (mode == SomeMode.Range) {
       if (selectedDates == null) {
-        firstRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-        endRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-        endRangeDate.add(Duration(days: 2));
+        firstRangeDate = Jiffy(DateTime(now!.year, now!.month, now!.day)).dateTime;
+        endRangeDate = Jiffy(DateTime(now!.year, now!.month, now!.day)).dateTime;
+        endRangeDate!.add(Duration(days: 2));
       } else {
-        DateTime dateRange = now;
-        if (selectedDates.length > 0) {
-          dateRange = selectedDates[0];
+        DateTime? dateRange = now;
+        if (selectedDates!.length > 0) {
+          dateRange = selectedDates![0];
         }
-        if (dateRange.difference(startDate).inDays >= 0) {
-          if (selectedDates.length > 0) {
-            firstRangeDate = Jiffy(selectedDates[0]).dateTime;
+        if (dateRange!.difference(startDate!).inDays >= 0) {
+          if (selectedDates!.length > 0) {
+            firstRangeDate = Jiffy(selectedDates![0]).dateTime;
             endRangeDate =
-                Jiffy(selectedDates[selectedDates.length - 1]).dateTime;
+                Jiffy(selectedDates![selectedDates!.length - 1]).dateTime;
           } else {
             firstRangeDate =
-                Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-            endRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-            endRangeDate.add(Duration(days: 2));
+                Jiffy(DateTime(now!.year, now!.month, now!.day)).dateTime;
+            endRangeDate = Jiffy(DateTime(now!.year, now!.month, now!.day)).dateTime;
+            endRangeDate!.add(Duration(days: 2));
           }
         } else {
           firstRangeDate =
-              Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-          endRangeDate = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-          endRangeDate.add(Duration(days: 2));
+              Jiffy(DateTime(now!.year, now!.month, now!.day)).dateTime;
+          endRangeDate = Jiffy(DateTime(now!.year, now!.month, now!.day)).dateTime;
+          endRangeDate!.add(Duration(days: 2));
         }
       }
 
@@ -191,19 +190,19 @@ class SomeCalendarState extends State<SomeCalendar> {
       dateEndDate = Jiffy(endRangeDate).format("dd");
       monthEndDate = Jiffy(endRangeDate).format("MMM");
       yearEndDate = Jiffy(endRangeDate).format("yyyy");
-      if (selectedDates.length <= 0)
+      if (selectedDates!.length <= 0)
         generateListDateRange();
       else {
-        var diff = selectedDates[selectedDates.length - 1]
-            .difference(selectedDates[0])
+        var diff = selectedDates![selectedDates!.length - 1]!
+            .difference(selectedDates![0]!)
             .inDays +
             1;
-        var date = selectedDates[0];
-        selectedDates.clear();
+        var date = selectedDates![0];
+        selectedDates!.clear();
         for (int i = 0; i < diff; i++) {
-          selectedDates.add(date);
-          date = Jiffy(DateTime(now.year, now.month, now.day)).dateTime;
-          endRangeDate.add(Duration(days: 1));
+          selectedDates!.add(date);
+          date = Jiffy(DateTime(now!.year, now!.month, now!.day)).dateTime;
+          endRangeDate!.add(Duration(days: 1));
         }
       }
     } else {
@@ -217,15 +216,15 @@ class SomeCalendarState extends State<SomeCalendar> {
   void initState() {
     month = monthFirstDate;
     year = yearFirstDate;
-    startDate = SomeUtils.setToMidnight(startDate);
-    lastDate = SomeUtils.setToMidnight(lastDate);
-    pagesCount = SomeUtils.getCountFromDiffDate(startDate, lastDate);
+    startDate = SomeUtils.setToMidnight(startDate!);
+    lastDate = SomeUtils.setToMidnight(lastDate!);
+    pagesCount = SomeUtils.getCountFromDiffDate(startDate!, lastDate!);
     controller =
         PageController(keepPage: false, initialPage: getInitialController());
 
     pageView = PageView.builder(
       controller: controller,
-      scrollDirection: scrollDirection,
+      scrollDirection: scrollDirection!,
       itemCount: pagesCount,
       onPageChanged: (index) {
         SomeDateRange someDateRange = getDateRange(index);
@@ -262,7 +261,7 @@ class SomeCalendarState extends State<SomeCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    if (isWithoutDialog)
+    if (isWithoutDialog!)
       return withoutDialog();
     else
       return show();
@@ -270,28 +269,28 @@ class SomeCalendarState extends State<SomeCalendar> {
 
   int getInitialController() {
     if (selectedDate == null) {
-      return SomeUtils.getDiffMonth(startDate, Jiffy().dateTime);
+      return SomeUtils.getDiffMonth(startDate!, Jiffy().dateTime);
     } else {
-      if (selectedDate
-          .difference(startDate)
+      if (selectedDate!
+          .difference(startDate!)
           .inDays >= 0)
-        return SomeUtils.getDiffMonth(startDate, selectedDate);
+        return SomeUtils.getDiffMonth(startDate!, selectedDate!);
       else
-        return SomeUtils.getDiffMonth(startDate, Jiffy().dateTime);
+        return SomeUtils.getDiffMonth(startDate!, Jiffy().dateTime);
     }
   }
 
   void onCallback(DateTime a) {
     if (mode == SomeMode.Multi) {
-      if (selectedDates.contains(a))
-        selectedDates.remove(a);
+      if (selectedDates!.contains(a))
+        selectedDates!.remove(a);
       else
-        selectedDates.add(a);
-      selectedDates.sort((a, b) {
-        return a.compareTo(b);
+        selectedDates!.add(a);
+      selectedDates!.sort((a, b) {
+        return a!.compareTo(b!);
       });
-      if (isWithoutDialog) {
-        done(selectedDates);
+      if (isWithoutDialog!) {
+        done!(selectedDates);
       }
     } else if (mode == SomeMode.Single) {
       selectedDate = a;
@@ -299,28 +298,28 @@ class SomeCalendarState extends State<SomeCalendar> {
         dateFirstDate = Jiffy(selectedDate).format("dd");
         monthFirstDate = Jiffy(selectedDate).format("MMM");
         yearFirstDate = Jiffy(selectedDate).format("yyyy");
-        if (isWithoutDialog) {
-          done(selectedDate);
+        if (isWithoutDialog!) {
+          done!(selectedDate);
         }
       });
     } else {
       if (isSelectedModeFirstDateRange) {
-        if (a.isBefore(endRangeDate)) {
+        if (a.isBefore(endRangeDate!)) {
           firstRangeDate = a;
         } else {
           endRangeDate = a;
         }
       } else {
-        if (a.isBefore(firstRangeDate)) {
+        if (a.isBefore(firstRangeDate!)) {
           firstRangeDate = a;
         } else {
           endRangeDate = a;
         }
       }
 
-      selectedDates.clear();
+      selectedDates!.clear();
       generateListDateRange();
-      selectedDates.sort((a, b) => a.compareTo(b));
+      selectedDates!.sort((a, b) => a!.compareTo(b!));
       setState(() {
         dateFirstDate = Jiffy(firstRangeDate).format("dd");
         monthFirstDate = Jiffy(firstRangeDate).format("MMM");
@@ -330,46 +329,46 @@ class SomeCalendarState extends State<SomeCalendar> {
         yearEndDate = Jiffy(endRangeDate).format("yyyy");
       });
 
-      if (isWithoutDialog) {
-        done(selectedDates);
+      if (isWithoutDialog!) {
+        done!(selectedDates);
       }
     }
   }
 
   void generateListDateRange() {
-    var diff = endRangeDate
-        .difference(firstRangeDate)
+    var diff = endRangeDate!
+        .difference(firstRangeDate!)
         .inDays + 1;
     var date = firstRangeDate;
     for (int i = 0; i < diff; i++) {
-      selectedDates.add(date);
-      date = date.add(Duration(days: 1));
+      selectedDates!.add(date);
+      date = date!.add(Duration(days: 1));
     }
   }
 
   SomeDateRange getDateRange(int position) {
-    DateTime pageStartDate;
-    DateTime pageEndDate;
+    DateTime? pageStartDate;
+    DateTime? pageEndDate;
 
     if (position == 0) {
       pageStartDate = startDate;
-      if (pagesCount <= 1) {
+      if (pagesCount! <= 1) {
         pageEndDate = lastDate;
       } else {
-        var last = Jiffy(DateTime(startDate.year, startDate.month))
+        var last = Jiffy(DateTime(startDate!.year, startDate!.month))
           ..add(months: 1);
         var lastDayOfMonth = last..subtract(days: 1);
         pageEndDate = lastDayOfMonth.dateTime;
       }
-    } else if (position == pagesCount - 1) {
-      var start = Jiffy(DateTime(lastDate.year, lastDate.month))
+    } else if (position == pagesCount! - 1) {
+      var start = Jiffy(DateTime(lastDate!.year, lastDate!.month))
         ..subtract(months: 1);
       pageStartDate = start.dateTime;
       pageEndDate = Jiffy(lastDate).dateTime;
       pageEndDate = pageEndDate.subtract(Duration(days: 1));
     } else {
       var firstDateOfCurrentMonth =
-      Jiffy(DateTime(startDate.year, startDate.month))
+      Jiffy(DateTime(startDate!.year, startDate!.month))
         ..add(months: position);
       pageStartDate = firstDateOfCurrentMonth.dateTime;
       var a = firstDateOfCurrentMonth
@@ -441,7 +440,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            labels.dialogRangeFirstDate,
+                            labels!.dialogRangeFirstDate,
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 fontSize: 12,
@@ -456,7 +455,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                                 fontFamily: "playfair-regular",
                                 color: isSelectedModeFirstDateRange
                                     ? textColor
-                                    : textColor.withAlpha(150),
+                                    : textColor!.withAlpha(150),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
@@ -475,7 +474,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            labels.dialogRangeLastDate,
+                            labels!.dialogRangeLastDate,
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 fontSize: 12,
@@ -489,7 +488,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                             style: TextStyle(
                                 fontFamily: "playfair-regular",
                                 color: isSelectedModeFirstDateRange
-                                    ? textColor.withAlpha(150)
+                                    ? textColor!.withAlpha(150)
                                     : textColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
@@ -609,16 +608,16 @@ class SomeCalendarState extends State<SomeCalendar> {
                     ),
                     onPressed: () {
                       if (mode == SomeMode.Multi || mode == SomeMode.Range) {
-                        done(selectedDates);
+                        done!(selectedDates);
                       } else if (mode == SomeMode.Single) {
-                        done(selectedDate);
+                        done!(selectedDate);
                       }
                       Navigator.of(context).pop();
                     },
                     child: Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 8),
                       child: Text(
-                        labels.dialogDone,
+                        labels!.dialogDone,
                         style: TextStyle(
                             fontFamily: "Avenir",
                             fontSize: 14,
@@ -643,7 +642,7 @@ class SomeCalendarState extends State<SomeCalendar> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 8, bottom: 8),
                     child: Text(
-                      labels.dialogCancel,
+                      labels!.dialogCancel,
                       style: TextStyle(
                           fontFamily: "Avenir",
                           fontSize: 14,

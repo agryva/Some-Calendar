@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class SomeWeekLabel extends StatelessWidget {
-  final Color textColor;
+  final Color? textColor;
   final int firstDayOfWeek;
 
-  const SomeWeekLabel({Key key, this.textColor, this.firstDayOfWeek = 1}) : super(key: key);
+  const SomeWeekLabel({Key? key, this.textColor, this.firstDayOfWeek = 1}) : super(key: key);
 
   Widget _weekdayContainer(String weekDayName, TextStyle textStyle) {
     return Expanded(
