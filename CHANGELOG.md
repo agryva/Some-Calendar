@@ -1,3 +1,7 @@
+## [1.3.0] -  7 December 2022.
+* Support Null Safety
+* Upgrade dependencies
+
 ## [1.2.6] -  28 July 2020.
    * Added View Mode Somecalendar #15
    * Thank you for the support of all of you :)
